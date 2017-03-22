@@ -78,12 +78,89 @@ namespace Models
             set { _application = value; }
         }
 
+        private string _targetEnv;
 
-
-        void Test()
+        [Name("Target Environment")]
+        public string TargetEnvironment
         {
-            Type t;
-            
+            get { return _targetEnv; }
+            set { _targetEnv = value; }
+        }
+
+        private string _affectedEnv;
+
+        [Name("Affected Environment")]
+        public string AffectedEnvironment
+        {
+            get { return _affectedEnv; }
+            set { _affectedEnv = value; }
+        }
+
+
+        private string _depItemType;
+
+        [Name("Deployment Item Type")]
+        public string DeploymentItemType
+        {
+            get { return _depItemType; }
+            set { _depItemType = value; }
+        }
+
+
+        private string _buildNos;
+
+        [Name("Build Numbers")]
+        public string BuildNumbers
+        {
+            get { return _buildNos; }
+            set { _buildNos = value; }
+        }
+
+        private string _releaseNoteLocation;
+
+        [Name("Release Note Location")]
+        public string ReleaseNoteLocation
+        {
+            get { return _releaseNoteLocation; }
+            set { _releaseNoteLocation = value; }
+        }
+
+
+        private string _testRepotLocation;
+
+        [Name("Test Report Location")]
+        public string TestReportLocation
+        {
+            get { return _testRepotLocation; }
+            set { _testRepotLocation = value; }
+        }
+
+        private string _testedInEnv;
+
+        [Name("Tested In Environment")]
+        public string TestedInEnv
+        {
+            get { return _testedInEnv; }
+            set { _testedInEnv = value; }
+        }
+
+        private string _testersInvolved;
+
+        [Name("Testers Involved")]
+        public string TestersInvolved
+        {
+            get { return _testersInvolved; }
+            set { _testersInvolved = value; }
+        }
+
+
+        private string _deploymentGuideline;
+
+        [Name("Deployment Guidelines")]
+        public string DeploymentGuidelines
+        {
+            get { return _deploymentGuideline; }
+            set { _deploymentGuideline = value; }
         }
 
     }
