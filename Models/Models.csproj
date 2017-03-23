@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\NameAttribute.cs" />
+    <Compile Include="Attributes\SnoAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SIT2_Item.cs" />
   </ItemGroup>

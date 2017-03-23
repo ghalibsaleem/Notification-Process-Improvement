@@ -14,6 +14,7 @@ namespace Models
         
         private string _project;
 
+        [Sno(1)]
         [Name("Project")]
         public string Project
         {
@@ -23,6 +24,7 @@ namespace Models
 
         private string _requesterName;
 
+        [Sno(2)]
         [Name("Requester Name")]
         public string RequesterName
         {
@@ -30,9 +32,11 @@ namespace Models
             set { _requesterName = value; }
         }
 
+
         
         private string _bussinessRelease;
 
+        [Sno(3)]
         [Name("Bussiness Release")]
         public string BussinessRelease
         {
@@ -43,6 +47,7 @@ namespace Models
 
         private string _deploymentWindow;
 
+        [Sno(4)]
         [Name("Deployment Window")]
         public string DeploymentWindow
         {
@@ -53,6 +58,7 @@ namespace Models
 
         private string _deploymentType;
 
+        [Sno(5)]
         [Name("Deployment Type")]
         public string DeploymentType
         {
@@ -62,6 +68,7 @@ namespace Models
 
         private string _deploymentReason;
 
+        [Sno(6)]
         [Name("Deployment Reason")]
         public string DeploymentReason
         {
@@ -71,6 +78,7 @@ namespace Models
 
         private string _application;
 
+        [Sno(7)]
         [Name("Application")]
         public string Application
         {
@@ -80,6 +88,7 @@ namespace Models
 
         private string _targetEnv;
 
+        [Sno(8)]
         [Name("Target Environment")]
         public string TargetEnvironment
         {
@@ -89,6 +98,7 @@ namespace Models
 
         private string _affectedEnv;
 
+        [Sno(9)]
         [Name("Affected Environment")]
         public string AffectedEnvironment
         {
@@ -99,6 +109,7 @@ namespace Models
 
         private string _depItemType;
 
+        [Sno(10)]
         [Name("Deployment Item Type")]
         public string DeploymentItemType
         {
@@ -109,6 +120,7 @@ namespace Models
 
         private string _buildNos;
 
+        [Sno(11)]
         [Name("Build Numbers")]
         public string BuildNumbers
         {
@@ -118,6 +130,7 @@ namespace Models
 
         private string _releaseNoteLocation;
 
+        [Sno(12)]
         [Name("Release Note Location")]
         public string ReleaseNoteLocation
         {
@@ -128,6 +141,7 @@ namespace Models
 
         private string _testRepotLocation;
 
+        [Sno(13)]
         [Name("Test Report Location")]
         public string TestReportLocation
         {
@@ -137,6 +151,7 @@ namespace Models
 
         private string _testedInEnv;
 
+        [Sno(14)]
         [Name("Tested In Environment")]
         public string TestedInEnv
         {
@@ -146,6 +161,7 @@ namespace Models
 
         private string _testersInvolved;
 
+        [Sno(15)]
         [Name("Testers Involved")]
         public string TestersInvolved
         {
@@ -156,11 +172,138 @@ namespace Models
 
         private string _deploymentGuideline;
 
+        [Sno(16)]
         [Name("Deployment Guidelines")]
         public string DeploymentGuidelines
         {
             get { return _deploymentGuideline; }
             set { _deploymentGuideline = value; }
+        }
+
+        private string _isMannualConfig;
+
+        [Sno(17)]
+        [Name("Deployment Guideline has manual Configuration Changes?")]
+        public string IsMannualConfig
+        {
+            get { return _isMannualConfig; }
+            set { _isMannualConfig = value; }
+        }
+
+
+        private string _hasRollbackInstruct;
+
+        [Sno(18)]
+        [Name("Deployment Guideline has Rollback instructions")]
+        public string HasRollbackInstruct
+        {
+            get { return _hasRollbackInstruct; }
+            set { _hasRollbackInstruct = value; }
+        }
+
+
+        private string _locationOfDep;
+
+        [Sno(19)]
+        [Name("Locations of the deployment items")]
+        public string LocationOfDep
+        {
+            get { return _locationOfDep; }
+            set { _locationOfDep = value; }
+        }
+
+
+        private string _dependencies;
+
+        [Sno(20)]
+        [Name("Dependencies")]
+        public string Dependencies
+        {
+            get { return _dependencies; }
+            set { _dependencies = value; }
+        }
+
+
+        private string _projectApproval;
+
+        [Sno(21)]
+        [Name("Project's Approval")]
+        public string ProjectApproval
+        {
+            get { return _projectApproval; }
+            set { _projectApproval = value; }
+        }
+
+
+        private string _shortDeployment ;
+
+        [Sno(22)]
+        [Name("Short deployment request message")]
+        public string ShortDeployment
+        {
+            get { return _shortDeployment; }
+            set { _shortDeployment = value; }
+        }
+
+
+        private string _managerApproval;
+
+        [Sno(23)]
+        [Name("Release Manager's approval")]
+        public string ManagerApproval
+        {
+            get { return _managerApproval; }
+            set { _managerApproval = value; }
+        }
+
+        private string _comments;
+
+        [Sno(24)]
+        [Name("Comments")]
+        public string Comments
+        {
+            get { return _comments; }
+            set { _comments = value; }
+        }
+
+        private string _deploymentStatus;
+
+        [Sno(25)]
+        [Name("Deployment status")]
+        public string DeploymentStatus
+        {
+            get { return _deploymentStatus; }
+            set { _deploymentStatus = value; }
+        }
+
+        private string _teamDeployDate;
+
+        [Sno(26)]
+        [Name("Deployment Team deployed date and time")]
+        public string TeamDeployDate
+        {
+            get { return _teamDeployDate; }
+            set { _teamDeployDate = value; }
+        }
+
+        private string _deploymentOutcome;
+
+        [Sno(27)]
+        [Name("Deployment Outcome")]
+        public string DeploymentOutcome
+        {
+            get { return _deploymentOutcome; }
+            set { _deploymentOutcome = value; }
+        }
+
+        private string _passedSmokeTest;
+
+        [Sno(28)]
+        [Name("Deployment passed Smoke test")]
+        public string PassedSmokeTest
+        {
+            get { return _passedSmokeTest; }
+            set { _passedSmokeTest = value; }
         }
 
     }
