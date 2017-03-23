@@ -1,4 +1,6 @@
 ﻿using D.Net.EmailClient;
+using HtmlParser;
+using Models;
 using Notification_PI.CustomControl;
 using System;
 using System.Collections.Generic;
@@ -26,22 +28,24 @@ namespace Notification_PI
         {
             InitializeComponent();
             mainContentControl.Content = new ItemGrid();
-            /*
+            
             IMAP_Wrapper d = new IMAP_Wrapper();
             d.Connect("webmail.maersk.net", @"rajat.sharma@maersk.com", "Mar@2017", 993, true);
             d.SetCurrentFolder("Inbox");
-            d.LoadMessages();
+            d.LoadRecentMessages(915);
            
-            foreach (var item in d.Messages.OrderByDescending(x => x.Date).ToList())
+            foreach (var item in d.Messages
+                .Where(x=> x.Subject.Contains("SIM Application Deployment Management Dashboard"))
+                .OrderByDescending(x => x.Date).ToList())
             {
                 if(item.SequenceNumber == 916)
                 {
                     item.LoadInfos();
                     Parser p = new Parser();
-                    Dictionary<string, string> table = p.ParseHtml(item.TextBody);
+                    SIT2_Item table = p.ParseHtml(item.TextBody);
                 }
             }
-            */
+            
 
         }
     }

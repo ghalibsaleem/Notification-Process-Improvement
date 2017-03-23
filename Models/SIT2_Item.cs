@@ -34,14 +34,14 @@ namespace Models
 
 
         
-        private string _bussinessRelease;
+        private string _businessRelease;
 
         [Sno(3)]
-        [Name("Bussiness Release")]
-        public string BussinessRelease
+        [Name("Business Release")]
+        public string BusinessRelease
         {
-            get { return _bussinessRelease; }
-            set { _bussinessRelease = value; }
+            get { return _businessRelease; }
+            set { _businessRelease = value; }
         }
 
 
@@ -59,7 +59,7 @@ namespace Models
         private string _deploymentType;
 
         [Sno(5)]
-        [Name("Deployment Type")]
+        [Name("Deployment type")]
         public string DeploymentType
         {
             get { return _deploymentType; }
@@ -96,21 +96,21 @@ namespace Models
             set { _targetEnv = value; }
         }
 
-        private string _affectedEnv;
+        private string _affectedTech;
 
         [Sno(9)]
-        [Name("Affected Environment")]
-        public string AffectedEnvironment
+        [Name("Affected Technologies")]
+        public string AffectedTechnologies
         {
-            get { return _affectedEnv; }
-            set { _affectedEnv = value; }
+            get { return _affectedTech; }
+            set { _affectedTech = value; }
         }
 
 
         private string _depItemType;
 
         [Sno(10)]
-        [Name("Deployment Item Type")]
+        [Name("Deployment Item types")]
         public string DeploymentItemType
         {
             get { return _depItemType; }
@@ -121,7 +121,7 @@ namespace Models
         private string _buildNos;
 
         [Sno(11)]
-        [Name("Build Numbers")]
+        [Name("Build numbers")]
         public string BuildNumbers
         {
             get { return _buildNos; }
@@ -152,7 +152,7 @@ namespace Models
         private string _testedInEnv;
 
         [Sno(14)]
-        [Name("Tested In Environment")]
+        [Name("Tested in Environment")]
         public string TestedInEnv
         {
             get { return _testedInEnv; }
@@ -162,7 +162,7 @@ namespace Models
         private string _testersInvolved;
 
         [Sno(15)]
-        [Name("Testers Involved")]
+        [Name("Testers involved")]
         public string TestersInvolved
         {
             get { return _testersInvolved; }
@@ -173,7 +173,7 @@ namespace Models
         private string _deploymentGuideline;
 
         [Sno(16)]
-        [Name("Deployment Guidelines")]
+        [Name("Deployment Guideline")]
         public string DeploymentGuidelines
         {
             get { return _deploymentGuideline; }
@@ -227,7 +227,7 @@ namespace Models
         private string _projectApproval;
 
         [Sno(21)]
-        [Name("Project's Approval")]
+        [Name("Project's approval")]
         public string ProjectApproval
         {
             get { return _projectApproval; }
