@@ -21,7 +21,7 @@ namespace HtmlParser
             {
                 try
                 {
-                    int j = 0;
+                    //int j = 0;
                     HtmlNode tbody = table.SelectNodes("tbody").First();
                     foreach (HtmlNode row in tbody.SelectNodes("tr"))
                     {
@@ -52,7 +52,7 @@ namespace HtmlParser
                             }
                             i++;
                         }
-                        j++;
+                        //j++;
                     }
                 }
                 catch (Exception)
