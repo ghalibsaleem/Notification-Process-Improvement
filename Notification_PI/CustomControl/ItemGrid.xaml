@@ -14,8 +14,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    
-        <StackPanel>
+    <materialDesign:DialogHost x:Name="gridDialogHost" Identifier="gridDialogHost">
+        <StackPanel Margin="5 5 5 5" x:Name="stackDialog">
             <DataGrid Margin="0 8 0 0" ItemsSource="{Binding Sit_ItemsCollection}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
                       materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
 
@@ -46,7 +46,9 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button></Button>
+                                    <Button Click="Button_Click">
+                                        <materialDesign:PackIcon Kind="Email"/>
+                                    </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -54,5 +56,5 @@
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
-    
+    </materialDesign:DialogHost>
 </UserControl>

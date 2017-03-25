@@ -24,5 +24,10 @@ namespace Notification_PI.CustomControl
         {
             InitializeComponent();
         }
+
+        private void Cancel_Button_Clicked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

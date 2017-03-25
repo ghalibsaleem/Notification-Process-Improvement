@@ -69,9 +69,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\CommandHandler.cs" />
+    <Compile Include="Converters\PropertyAttributeConverter.cs" />
+    <Compile Include="Converters\PropertyToValueConverter.cs" />
     <Compile Include="CustomControl\ItemControl.xaml.cs">
       <DependentUpon>ItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ItemControlViewModel.cs" />
     <Compile Include="ViewModels\ItemGridViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="CustomControl\ItemControl.xaml">
@@ -149,8 +153,6 @@
       <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converters\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,12 +1,18 @@
 ﻿using D.Net.EmailClient;
 using HtmlParser;
+using MaterialDesignThemes.Wpf;
 using Models;
+using Notification_PI.Commands;
+using Notification_PI.CustomControl;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Notification_PI.ViewModels
 {
@@ -16,6 +22,10 @@ namespace Notification_PI.ViewModels
         {
             _sit_ItemCollection = new ObservableCollection<SIT2_Item>();
         }
+
+
+
+        public ICommand RunDialogCommand => new CommandHandler(ExecuteRunDialog);
 
         private ObservableCollection<SIT2_Item> _sit_ItemCollection;
 
@@ -41,14 +51,32 @@ namespace Notification_PI.ViewModels
                     item.LoadInfos();
                     Parser p = new Parser();
                     SIT2_Item table = p.ParseHtml(item.TextBody);
-                    table.Id = int.Parse(
-                        item.Subject.Remove(0, item.Subject.IndexOf(" ID") + 3)
-                    );
+                    table.Id = item.Subject.Remove(0, item.Subject.IndexOf(" ID") + 3)
+                    ;
                     _sit_ItemCollection.Add(table);
                 }
             }
 
+            
         }
 
+
+        private async void ExecuteRunDialog(object o)
+        {
+            //let's set up a little MVVM, cos that's what the cool kids are doing:
+            
+            var view = new ItemControl()
+            {
+                DataContext = new ItemControlViewModel()
+                {
+                    SitObject = o as SIT2_Item,
+                    ItemProperties =new ObservableCollection<PropertyInfo>( typeof(SIT2_Item).GetProperties())
+                }
+            };
+            
+            //show the dialog
+            //var result = await DialogHost.Show(view, "RootDialog");
+
+        }
     }
 }

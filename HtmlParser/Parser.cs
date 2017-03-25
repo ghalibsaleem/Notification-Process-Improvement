@@ -68,6 +68,7 @@ namespace HtmlParser
                     }
                     if(counter > 27)
                     {
+                        
                         return item;
                     }
                 }
@@ -93,7 +94,7 @@ namespace HtmlParser
                 .ToList();
             SIT2_Item item = new SIT2_Item();
             item.GetType().GetProperty("Project").SetValue(item,"asd");
-            
+            var s = item.GetType().GetProperties();
             return null;
         }
     }

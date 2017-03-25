@@ -5,7 +5,9 @@ using Notification_PI.CustomControl;
 using Notification_PI.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -34,7 +36,11 @@ namespace Notification_PI
             itemModel.FillCollection();
             grid.DataContext = itemModel;
             mainContentControl.Content = grid;
+            //ItemControl c = new ItemControl();
             
+            //c.DataContext = new ItemControlViewModel() { SitObject = itemModel.Sit_ItemsCollection.First(),
+            //ItemProperties =new ObservableCollection<PropertyInfo>( itemModel.Sit_ItemsCollection.First().GetType().GetProperties().ToList())};
+            //mainContentControl.Content = c;
             //mainContentControl.Content = new SignIn();
             //mainContentControl.Content = new Loading();
 

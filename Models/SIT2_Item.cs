@@ -11,11 +11,11 @@ namespace Models
     public class SIT2_Item
     {
 
-        private int _id;
+        private string _id;
 
         [Sno(0)]
         [Name("Id")]
-        public int Id
+        public string Id
         {
             get { return _id; }
             set { _id = value; }

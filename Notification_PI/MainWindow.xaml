@@ -25,7 +25,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <materialDesign:DialogHost x:Name="rootDialog">
+    <materialDesign:DialogHost x:Name="rootDialog" Identifier="RootDialog">
         <DockPanel>
             <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                             Mode="PrimaryMid" DockPanel.Dock="Top">
