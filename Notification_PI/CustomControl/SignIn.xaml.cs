@@ -24,5 +24,10 @@ namespace Notification_PI.CustomControl
         {
             InitializeComponent();
         }
+
+        private void SignInDialogOpened(object sender, MaterialDesignThemes.Wpf.DialogOpenedEventArgs eventArgs)
+        {
+
+        }
     }
 }

@@ -2,6 +2,7 @@
 using HtmlParser;
 using Models;
 using Notification_PI.CustomControl;
+using Notification_PI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,25 +28,14 @@ namespace Notification_PI
         public MainWindow()
         {
             InitializeComponent();
-            mainContentControl.Content = new ItemGrid();
             
-            IMAP_Wrapper d = new IMAP_Wrapper();
-            d.Connect("webmail.maersk.net", @"rajat.sharma@maersk.com", "Mar@2017", 993, true);
-            d.SetCurrentFolder("Inbox");
-            d.LoadRecentMessages(915);
-           
-            foreach (var item in d.Messages
-                .Where(x=> x.Subject.Contains("SIM Application Deployment Management Dashboard"))
-                .OrderByDescending(x => x.Date).ToList())
-            {
-                if(item.SequenceNumber == 916)
-                {
-                    item.LoadInfos();
-                    Parser p = new Parser();
-                    SIT2_Item table = p.ParseHtml(item.TextBody);
-                }
-            }
-            
+            ItemGrid grid = new ItemGrid();
+            ItemGridViewModel itemModel = new ItemGridViewModel();
+            itemModel.FillCollection();
+            grid.DataContext = itemModel;
+            mainContentControl.Content = grid;
+            //mainContentControl.Content = new SignIn();
+            //mainContentControl.Content = new Loading();
 
         }
     }

@@ -4,9 +4,60 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Notification_PI.CustomControl"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Flipper.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Popupbox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <materialDesign:DialogHost HorizontalAlignment="Center" VerticalAlignment="Center" DialogOpened="SignInDialogOpened">
+        <materialDesign:DialogHost.DialogContent>
+            <DockPanel>
+                <local:Loading HorizontalAlignment="Center" VerticalAlignment="Center"></local:Loading>
+            </DockPanel>
+        </materialDesign:DialogHost.DialogContent>
+        <WrapPanel Margin="0 0 8 8">
+            <materialDesign:Card Margin="4 4 0 0" Width="200">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="140" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <materialDesign:ColorZone Mode="PrimaryLight" VerticalAlignment="Stretch">
+                        <materialDesign:PackIcon Kind="AccountCircle" Height="128" Width="128"
+                                                 VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </materialDesign:ColorZone>
+                    <Button Grid.Row="0" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        Margin="0 0 16 -20"
+                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                        <materialDesign:PackIcon Kind="Login" />
+                    </Button>
+                    <StackPanel Grid.Row="1" Margin="8 24 8 0" >
+                        <TextBox materialDesign:HintAssist.Hint="Email" materialDesign:HintAssist.IsFloating="True"
+                                 Margin="0 12 0 0"/>
+                        <PasswordBox Grid.Row="1" materialDesign:HintAssist.Hint="Password" materialDesign:HintAssist.IsFloating="True"
+                                 Margin="0 12 0 0"/>
+                    </StackPanel>
+                    <DockPanel HorizontalAlignment="Center" Grid.Row="2" Margin="8">
+                        <!--<Button Width="30" Padding="2 2 2 2"
+                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                            <materialDesign:PackIcon Kind="Login" />
+                        </Button>-->
+                    </DockPanel>
+                </Grid>
+            </materialDesign:Card>
+        </WrapPanel>
+    </materialDesign:DialogHost>
+
+    
 </UserControl>

@@ -17,7 +17,7 @@
     <ScrollViewer>
         <StackPanel>
             <TextBlock>Custom Columns</TextBlock>
-            <DataGrid Margin="0 8 0 0" ItemsSource="{Binding Items3}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+            <DataGrid Margin="0 8 0 0" ItemsSource="{Binding Sit_ItemsCollection}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
                       materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Binding="{Binding IsSelected}" 
@@ -33,8 +33,8 @@
                             </Border>
                         </DataGridCheckBoxColumn.Header>
                     </DataGridCheckBoxColumn>
-                    <DataGridTextColumn Binding="{Binding Code}"
-                                        Header="Code"
+                    <DataGridTextColumn Binding="{Binding Project}"
+                                        Header="Code" IsReadOnly="True"
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                     <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
                     <materialDesign:MaterialDataGridTextColumn Binding="{Binding Name}"
