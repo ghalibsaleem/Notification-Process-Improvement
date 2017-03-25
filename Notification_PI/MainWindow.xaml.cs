@@ -28,14 +28,20 @@ namespace Notification_PI
         public MainWindow()
         {
             InitializeComponent();
-            
+            //MaterialDesignThemes.Wpf.DialogHost.OpenDialogCommand.Execute(new SignIn(), rootDialog);
             ItemGrid grid = new ItemGrid();
             ItemGridViewModel itemModel = new ItemGridViewModel();
             itemModel.FillCollection();
             grid.DataContext = itemModel;
             mainContentControl.Content = grid;
+            
             //mainContentControl.Content = new SignIn();
             //mainContentControl.Content = new Loading();
+
+        }
+
+        private void MenuPopupButton_OnClick(object sender, RoutedEventArgs e)
+        {
 
         }
     }

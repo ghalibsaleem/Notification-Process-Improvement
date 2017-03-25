@@ -11,7 +11,18 @@ namespace Models
     public class SIT2_Item
     {
 
-        
+        private int _id;
+
+        [Sno(0)]
+        [Name("Id")]
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
+
+
         private string _project;
 
         [Sno(1)]

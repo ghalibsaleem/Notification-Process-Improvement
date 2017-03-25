@@ -12,6 +12,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:Notification_PI"
+        xmlns:localCustomControl="clr-namespace:Notification_PI.CustomControl"
         mc:Ignorable="d"
         Title="MainWindow">
 
@@ -24,39 +25,78 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <materialDesign:DialogHost Identifier="RootDialog">
-        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
-            <materialDesign:DrawerHost.LeftDrawerContent>
-                <DockPanel MinWidth="212">
+    <materialDesign:DialogHost x:Name="rootDialog">
+        <DockPanel>
+            <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                            Mode="PrimaryMid" DockPanel.Dock="Top">
+                <DockPanel>
+                    <!--<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
+                                        x:Name="MenuToggleButton" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
 
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                        <materialDesign:PopupBox Padding="0 0 0 0"  PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
+                            <materialDesign:PopupBox.ToggleContent>
+                                <materialDesign:PackIcon Kind="AccountCircle" Width="30" Height="30"></materialDesign:PackIcon>
+                            </materialDesign:PopupBox.ToggleContent>
+
+                            <WrapPanel>
+                                <Grid Width="200">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="140" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <materialDesign:ColorZone Mode="PrimaryLight" VerticalAlignment="Stretch">
+                                        <materialDesign:PackIcon Kind="AccountCircle" Height="128" Width="128"
+                                                 VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                    </materialDesign:ColorZone>
+                                    <Button Grid.Row="0" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
+                                                HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                                Margin="0 0 16 -20" ToolTip="Logout">
+                                        <materialDesign:PackIcon Kind="Logout" />
+                                    </Button>
+                                    <StackPanel Grid.Row="1" Margin="8 24 8 0" >
+                                        <TextBlock FontWeight="Bold">User</TextBlock>
+                                        <TextBlock TextWrapping="Wrap" VerticalAlignment="Center">someone@maersk.com</TextBlock>
+                                    </StackPanel>
+                                    <DockPanel HorizontalAlignment="Center" Grid.Row="2" Margin="8">
+                                        <!--<Button Width="30" Padding="2 2 2 2"
+                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                            <materialDesign:PackIcon Kind="Login" />
+                        </Button>-->
+                                    </DockPanel>
+                                </Grid>
+                            </WrapPanel>
+                        </materialDesign:PopupBox>
+                        
+                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
+                            <StackPanel>
+                                
+                                <Button Content="Help" Click="MenuPopupButton_OnClick"/>
+                                <Button Content="About" Click="MenuPopupButton_OnClick"/>
+                                <Separator/>
+                                <Button Content="Exit" Click="MenuPopupButton_OnClick"/>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                    </StackPanel>
+                    
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Notifications</TextBlock>
 
                 </DockPanel>
-
-            </materialDesign:DrawerHost.LeftDrawerContent>
-            <DockPanel>
-                <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                                            Mode="PrimaryMid" DockPanel.Dock="Top">
-                    <DockPanel>
-                        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
-                                        x:Name="MenuToggleButton" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Notifications</TextBlock>
-                    </DockPanel>
-                </materialDesign:ColorZone>
-                <Grid>
-                    <!--<materialDesign:Card Padding="32" Margin="16">
+            </materialDesign:ColorZone>
+            <Grid>
+                <!--<materialDesign:Card Padding="32" Margin="16">
                         <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}">My First Material Design App</TextBlock>
                     </materialDesign:Card>-->
-                    <ScrollViewer Grid.Row="1" 
+                <ScrollViewer Grid.Row="1" 
                                   HorizontalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.HorizontalScrollBarVisibilityRequirement}"
                                   VerticalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.VerticalScrollBarVisibilityRequirement}" 
                                   Padding="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.MarginRequirement}">
-                        <ContentControl x:Name="mainContentControl"></ContentControl>
-                    </ScrollViewer>
-                    
-                </Grid>
-            </DockPanel>
+                    <ContentControl x:Name="mainContentControl"></ContentControl>
+                </ScrollViewer>
 
-        </materialDesign:DrawerHost>
+            </Grid>
+        </DockPanel>
     </materialDesign:DialogHost>
     
 </Window>

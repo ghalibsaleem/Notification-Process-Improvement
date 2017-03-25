@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace Notification_PI.CustomControl
 {
     /// <summary>
-    /// Interaction logic for SignIn.xaml
+    /// Interaction logic for ItemControl.xaml
     /// </summary>
-    public partial class SignIn : UserControl
+    public partial class ItemControl : UserControl
     {
-        public SignIn()
+        public ItemControl()
         {
             InitializeComponent();
-        }
-
-        private void SignInDialogOpened(object sender, MaterialDesignThemes.Wpf.DialogOpenedEventArgs eventArgs)
-        {
-            MaterialDesignThemes.Wpf.DialogHost.CloseDialogCommand.Execute(null, sender as IInputElement);
         }
     }
 }

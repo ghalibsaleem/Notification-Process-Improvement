@@ -31,7 +31,7 @@ namespace Notification_PI.ViewModels
             d.Connect("webmail.maersk.net", @"rajat.sharma@maersk.com", "Mar@2017", 993, true);
             d.SetCurrentFolder("Inbox");
             d.LoadRecentMessages(915);
-
+            
             foreach (var item in d.Messages
                 .Where(x => x.Subject.Contains("SIM Application Deployment Management Dashboard"))
                 .OrderByDescending(x => x.Date).ToList())
@@ -41,6 +41,9 @@ namespace Notification_PI.ViewModels
                     item.LoadInfos();
                     Parser p = new Parser();
                     SIT2_Item table = p.ParseHtml(item.TextBody);
+                    table.Id = int.Parse(
+                        item.Subject.Remove(0, item.Subject.IndexOf(" ID") + 3)
+                    );
                     _sit_ItemCollection.Add(table);
                 }
             }
