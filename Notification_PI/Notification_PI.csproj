@@ -34,15 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="D.Net.EmailClient">
-      <HintPath>..\..\..\..\..\Downloads\Compressed\Mail\ConsoleApplication1\bin\Release\D.Net.EmailClient.dll</HintPath>
-    </Reference>
-    <Reference Include="D.Net.EmailInterfaces">
-      <HintPath>..\..\..\..\..\Downloads\Compressed\Mail\ConsoleApplication1\bin\Release\D.Net.EmailInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="LumiSoft.Net">
-      <HintPath>..\..\..\..\..\Downloads\Compressed\Mail\ConsoleApplication1\bin\Release\LumiSoft.Net.dll</HintPath>
-    </Reference>
     <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
@@ -152,6 +143,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Downloads\Compressed\Mail\D.Net.EmailClient\D.Net.EmailClient.csproj">
+      <Project>{af55cdc1-3de7-4b94-8915-3edffe06f2b4}</Project>
+      <Name>D.Net.EmailClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\Downloads\Compressed\Mail\D.Net.EmailInterfaces\D.Net.EmailInterfaces.csproj">
+      <Project>{2241d8cb-641b-4654-81d1-be4896efe708}</Project>
+      <Name>D.Net.EmailInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\Downloads\Compressed\Mail\Net\Net.csproj">
+      <Project>{7ab36ccf-5ffd-4780-a54e-a102eca028b5}</Project>
+      <Name>Net</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HtmlParser\HtmlParser.csproj">
       <Project>{e4d0300e-5b67-4cda-b669-369d6e76c581}</Project>
       <Name>HtmlParser</Name>
