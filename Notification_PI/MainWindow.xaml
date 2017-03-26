@@ -25,7 +25,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <materialDesign:DialogHost x:Name="rootDialog" Identifier="RootDialog">
+    <materialDesign:DialogHost x:Name="rootDialog" Identifier="RootDialog" DialogOpened="RootDialogOpened" DialogClosing="RootDialogClosed">
         <DockPanel>
             <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                             Mode="PrimaryMid" DockPanel.Dock="Top">
@@ -50,14 +50,14 @@
                                         <materialDesign:PackIcon Kind="AccountCircle" Height="128" Width="128"
                                                  VerticalAlignment="Center" HorizontalAlignment="Center" />
                                     </materialDesign:ColorZone>
-                                    <Button Grid.Row="0" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
+                                    <Button Grid.Row="0" Click="SignOut_Clicked" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
                                                 HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                                 Margin="0 0 16 -20" ToolTip="Logout">
                                         <materialDesign:PackIcon Kind="Logout" />
                                     </Button>
-                                    <StackPanel Grid.Row="1" Margin="8 24 8 0" >
+                                    <StackPanel Grid.Row="1" Margin="8 24 8 0" DataContext="{Binding User}">
                                         <TextBlock FontWeight="Bold">User</TextBlock>
-                                        <TextBlock TextWrapping="Wrap" VerticalAlignment="Center">someone@maersk.com</TextBlock>
+                                        <TextBlock Text="{Binding  Path=Email}" TextWrapping="Wrap" VerticalAlignment="Center"/>
                                     </StackPanel>
                                     <DockPanel HorizontalAlignment="Center" Grid.Row="2" Margin="8">
                                         <!--<Button Width="30" Padding="2 2 2 2"

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using Models;
+using Notification_PI.ModelsHelper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,9 +28,36 @@ namespace Notification_PI.CustomControl
             InitializeComponent();
         }
 
-        private void SignInDialogOpened(object sender, MaterialDesignThemes.Wpf.DialogOpenedEventArgs eventArgs)
+        private async void SignInDialogOpened(object sender, MaterialDesignThemes.Wpf.DialogOpenedEventArgs eventArgs)
         {
-            MaterialDesignThemes.Wpf.DialogHost.CloseDialogCommand.Execute(null, sender as IInputElement);
+            User user = new User();
+
+            user.Email = Email.Text;
+            user.Password = Password.Password;
+            UserHelper helper = new UserHelper();
+            if (await helper.CheckUser(user))
+            {
+                if (await helper.WriteUserToSystem(user))
+                {
+
+                    DialogHost sign = eventArgs.Source as DialogHost;
+                    
+                    DialogHost.CloseDialogCommand.Execute(null, sign);
+                    DialogHost.CloseDialogCommand.Execute(sender,null);
+                    //MaterialDesignThemes.Wpf.DialogHost.CloseDialogCommand.Execute(sender, null);
+                }
+            }
+            else
+            {
+                DialogHost.CloseDialogCommand.Execute(null, eventArgs.Source as DialogHost);
+            }
+            
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

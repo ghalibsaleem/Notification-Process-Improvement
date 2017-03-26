@@ -27,7 +27,9 @@ namespace Notification_PI.ViewModels
             set { _sit_Object = value; }
         }
 
+        public bool Initial { get; set; }
 
-        
+        public bool Final { get; set; }
+
     }
 }

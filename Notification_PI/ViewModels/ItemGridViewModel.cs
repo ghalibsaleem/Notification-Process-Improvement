@@ -1,9 +1,11 @@
-﻿using D.Net.EmailClient;
-using HtmlParser;
+﻿using HtmlParser;
 using MaterialDesignThemes.Wpf;
 using Models;
 using Notification_PI.Commands;
 using Notification_PI.CustomControl;
+using Notification_PI.FileHelper;
+using Notification_PI.JSONHelper;
+using Notification_PI.NetHelper;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +13,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Notification_PI.ViewModels
@@ -35,12 +36,12 @@ namespace Notification_PI.ViewModels
             set { _sit_ItemCollection = value; }
         }
 
-        public void FillCollection()
+        public async Task FillCollection(User user)
         {
-            IMAP_Wrapper d = new IMAP_Wrapper();
-            d.Connect("webmail.maersk.net", @"rajat.sharma@maersk.com", "Mar@2017", 993, true);
-            d.SetCurrentFolder("Inbox");
-            d.LoadRecentMessages(915);
+            IMAPAsync d = new IMAPAsync();
+            await d.ConnectAsync("webmail.maersk.net", user.Email, user.Password, 993, true);
+            await d.SetCurrentFolderAsync("Inbox");
+            await d.LoadRecentMessagesAsync(915);
             
             foreach (var item in d.Messages
                 .Where(x => x.Subject.Contains("SIM Application Deployment Management Dashboard"))
@@ -56,8 +57,14 @@ namespace Notification_PI.ViewModels
                     _sit_ItemCollection.Add(table);
                 }
             }
-
+            await d.DisconnectAsync();
+            //JSONHandler ass = new JSONHandler();
+            //FileHandler hand = new FileHandler();
             
+            //var a = ass.Serialize(new JSON_SIT_Model(Sit_ItemsCollection.First(), true, true));
+            //await hand.WriteOnSystem(a, FileHandler.FileName.SitItem);
+            //var str =await hand.ReadFromSystem(FileHandler.FileName.SitItem);
+            //var asw = ass.Deserialize<JSON_SIT_Model>(str);
         }
 
 
@@ -75,7 +82,7 @@ namespace Notification_PI.ViewModels
             };
             
             //show the dialog
-            //var result = await DialogHost.Show(view, "RootDialog");
+            var result = await DialogHost.Show(view, "RootDialog");
 
         }
     }

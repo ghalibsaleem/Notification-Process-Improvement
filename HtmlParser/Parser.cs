@@ -72,7 +72,7 @@ namespace HtmlParser
                         return item;
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                 }
 
