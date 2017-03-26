@@ -46,6 +46,16 @@
     <Compile Include="POP3_Wrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\D.Net.EmailInterfaces\D.Net.EmailInterfaces.csproj">
+      <Project>{2241d8cb-641b-4654-81d1-be4896efe708}</Project>
+      <Name>D.Net.EmailInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Net\Net.csproj">
+      <Project>{7ab36ccf-5ffd-4780-a54e-a102eca028b5}</Project>
+      <Name>Net</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
