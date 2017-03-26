@@ -12,11 +12,12 @@ namespace Notification_PI.FileHelper
 
         public enum FileName{
             SitItem,
-            UserDetails
+            UserDetails,
+            Settings
         }
         public async Task<bool> WriteOnSystem(string jsonString,FileName name)
         {
-            string path = Environment.CurrentDirectory + name.ToString() + ".json";
+            string path = Environment.CurrentDirectory +"\\" +name.ToString() + ".json";
             
             using (StreamWriter writer = File.CreateText(path))
             {
@@ -33,7 +34,7 @@ namespace Notification_PI.FileHelper
             String result = null;
             try
             {
-                string path = Environment.CurrentDirectory + name.ToString() + ".json";
+                string path = Environment.CurrentDirectory +"\\" +name.ToString() + ".json";
                 File.Decrypt(path);
                 using (StreamReader reader = File.OpenText(path))
                 {

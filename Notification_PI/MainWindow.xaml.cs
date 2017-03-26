@@ -107,6 +107,7 @@ namespace Notification_PI
             FileHandler handler = new FileHandler();
             await handler.DeleteFile(FileHandler.FileName.SitItem);
             await handler.DeleteFile(FileHandler.FileName.UserDetails);
+            await handler.DeleteFile(FileHandler.FileName.Settings);
             ((mainContentControl.Content as ItemGrid).DataContext as ItemGridViewModel).Sit_ItemsCollection = new ObservableCollection<SIT2_Item>();
             DialogHost.OpenDialogCommand.Execute(new Loading(), rootDialog);
         }

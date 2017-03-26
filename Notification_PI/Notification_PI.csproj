@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="FileHelper\FileHandler.cs" />
     <Compile Include="JSONHelper\JSONHandler.cs" />
+    <Compile Include="ModelsHelper\ItemHelper.cs" />
     <Compile Include="ModelsHelper\UserHelper.cs" />
     <Compile Include="NetHelper\IMAPAsync.cs" />
     <Compile Include="ViewModels\ItemControlViewModel.cs" />

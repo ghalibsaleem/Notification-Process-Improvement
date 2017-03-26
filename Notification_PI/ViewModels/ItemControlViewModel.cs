@@ -11,6 +11,23 @@ namespace Notification_PI.ViewModels
 {
     public class ItemControlViewModel
     {
+
+        public ItemControlViewModel(SIT2_Item item)
+        {
+            ItemProperties =new ObservableCollection<PropertyInfo>( item.GetType().GetProperties());
+            SitObject = item;
+            Initial = false;
+            Final = false;
+        }
+
+
+        public ItemControlViewModel(JSON_SIT_Model item)
+        {
+            ItemProperties = new ObservableCollection<PropertyInfo>(item.Item.GetType().GetProperties());
+            SitObject = item.Item;
+            Initial = item.Initial;
+            Final = item.Final;
+        }
         private ObservableCollection<PropertyInfo> _itemProperties;
 
         public ObservableCollection<PropertyInfo> ItemProperties

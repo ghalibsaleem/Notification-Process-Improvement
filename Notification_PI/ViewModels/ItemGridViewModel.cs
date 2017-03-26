@@ -5,10 +5,12 @@ using Notification_PI.Commands;
 using Notification_PI.CustomControl;
 using Notification_PI.FileHelper;
 using Notification_PI.JSONHelper;
+using Notification_PI.ModelsHelper;
 using Notification_PI.NetHelper;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -17,7 +19,7 @@ using System.Windows.Input;
 
 namespace Notification_PI.ViewModels
 {
-    public class ItemGridViewModel
+    public class ItemGridViewModel : INotifyPropertyChanged
     {
         public ItemGridViewModel()
         {
@@ -30,41 +32,32 @@ namespace Notification_PI.ViewModels
 
         private ObservableCollection<SIT2_Item> _sit_ItemCollection;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            PropertyChanged?.Invoke(this, e);
+        }
+
         public ObservableCollection<SIT2_Item> Sit_ItemsCollection
         {
             get { return _sit_ItemCollection; }
-            set { _sit_ItemCollection = value; }
+            set
+            {
+                _sit_ItemCollection = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("Sit_ItemsCollection"));
+            }
         }
 
         public async Task FillCollection(User user)
         {
-            IMAPAsync d = new IMAPAsync();
-            await d.ConnectAsync("webmail.maersk.net", user.Email, user.Password, 993, true);
-            await d.SetCurrentFolderAsync("Inbox");
-            await d.LoadRecentMessagesAsync(915);
+
+
+            ItemHelper helper = new ItemHelper();
             
-            foreach (var item in d.Messages
-                .Where(x => x.Subject.Contains("SIM Application Deployment Management Dashboard"))
-                .OrderByDescending(x => x.Date).ToList())
-            {
-                if (item.SequenceNumber == 916)
-                {
-                    item.LoadInfos();
-                    Parser p = new Parser();
-                    SIT2_Item table = p.ParseHtml(item.TextBody);
-                    table.Id = item.Subject.Remove(0, item.Subject.IndexOf(" ID") + 3)
-                    ;
-                    _sit_ItemCollection.Add(table);
-                }
-            }
-            await d.DisconnectAsync();
-            //JSONHandler ass = new JSONHandler();
-            //FileHandler hand = new FileHandler();
+            ObservableCollection<SIT2_Item> temp = await helper.GetItems(user);
+            Sit_ItemsCollection = new ObservableCollection<SIT2_Item>(temp);
             
-            //var a = ass.Serialize(new JSON_SIT_Model(Sit_ItemsCollection.First(), true, true));
-            //await hand.WriteOnSystem(a, FileHandler.FileName.SitItem);
-            //var str =await hand.ReadFromSystem(FileHandler.FileName.SitItem);
-            //var asw = ass.Deserialize<JSON_SIT_Model>(str);
         }
 
 
@@ -74,11 +67,7 @@ namespace Notification_PI.ViewModels
             
             var view = new ItemControl()
             {
-                DataContext = new ItemControlViewModel()
-                {
-                    SitObject = o as SIT2_Item,
-                    ItemProperties =new ObservableCollection<PropertyInfo>( typeof(SIT2_Item).GetProperties())
-                }
+                DataContext = new ItemControlViewModel(o as SIT2_Item)
             };
             
             //show the dialog

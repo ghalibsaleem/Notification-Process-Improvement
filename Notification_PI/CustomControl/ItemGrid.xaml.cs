@@ -34,12 +34,9 @@ namespace Notification_PI.CustomControl
         {
             var view = new ItemControl()
             {
-                DataContext = new ItemControlViewModel()
-                {
-                    SitObject = (sender as Button).DataContext as SIT2_Item,
-                    ItemProperties = new ObservableCollection<PropertyInfo>(typeof(SIT2_Item).GetProperties())
-                }
-                
+                DataContext = new ItemControlViewModel((sender as Button).DataContext as SIT2_Item)
+
+
             };
             Binding widthBinding = new Binding();
             widthBinding.ElementName = "stackDialog";
@@ -53,7 +50,17 @@ namespace Notification_PI.CustomControl
             heightBinding.Mode = BindingMode.OneWay;
             BindingOperations.SetBinding(view, ItemControl.HeightProperty, heightBinding);
 
-            await DialogHost.Show(view, "gridDialogHost");
+            await DialogHost.Show(view, "gridDialogHost", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
+        }
+
+        private void gridDialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            eventArgs.Handled = true;
+        }
+
+        private void gridDialogHost_DialogOpened(object sender, DialogOpenedEventArgs eventArgs)
+        {
+            eventArgs.Handled = true;
         }
     }
 }

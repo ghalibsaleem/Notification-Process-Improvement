@@ -14,7 +14,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <materialDesign:DialogHost x:Name="gridDialogHost" Identifier="gridDialogHost">
+    <materialDesign:DialogHost x:Name="gridDialogHost" Identifier="gridDialogHost" 
+                               DialogClosing="gridDialogHost_DialogClosing"
+                               DialogOpened="gridDialogHost_DialogOpened">
         <StackPanel Margin="5 5 5 5" x:Name="stackDialog">
             <DataGrid Margin="0 8 0 0" ItemsSource="{Binding Sit_ItemsCollection}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
                       materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
