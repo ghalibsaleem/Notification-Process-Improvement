@@ -13,11 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlParser", "HtmlParser\Ht
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{41F9A5AF-DF85-44BA-BA13-FF3DA2B82380}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net", "..\..\..\..\Downloads\Compressed\Mail\Net\Net.csproj", "{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D.Net.EmailClient", "D.Net.EmailClient\D.Net.EmailClient.csproj", "{AF55CDC1-3DE7-4B94-8915-3EDFFE06F2B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D.Net.EmailClient", "..\..\..\..\Downloads\Compressed\Mail\D.Net.EmailClient\D.Net.EmailClient.csproj", "{AF55CDC1-3DE7-4B94-8915-3EDFFE06F2B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D.Net.EmailInterfaces", "D.Net.EmailInterfaces\D.Net.EmailInterfaces.csproj", "{2241D8CB-641B-4654-81D1-BE4896EFE708}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D.Net.EmailInterfaces", "..\..\..\..\Downloads\Compressed\Mail\D.Net.EmailInterfaces\D.Net.EmailInterfaces.csproj", "{2241D8CB-641B-4654-81D1-BE4896EFE708}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net", "Net\Net.csproj", "{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,6 @@ Global
 		{41F9A5AF-DF85-44BA-BA13-FF3DA2B82380}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41F9A5AF-DF85-44BA-BA13-FF3DA2B82380}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41F9A5AF-DF85-44BA-BA13-FF3DA2B82380}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AF55CDC1-3DE7-4B94-8915-3EDFFE06F2B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AF55CDC1-3DE7-4B94-8915-3EDFFE06F2B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF55CDC1-3DE7-4B94-8915-3EDFFE06F2B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,6 +45,10 @@ Global
 		{2241D8CB-641B-4654-81D1-BE4896EFE708}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2241D8CB-641B-4654-81D1-BE4896EFE708}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2241D8CB-641B-4654-81D1-BE4896EFE708}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

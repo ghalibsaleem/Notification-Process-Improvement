@@ -151,10 +151,6 @@
       <Project>{2241d8cb-641b-4654-81d1-be4896efe708}</Project>
       <Name>D.Net.EmailInterfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Net\Net.csproj">
-      <Project>{7ab36ccf-5ffd-4780-a54e-a102eca028b5}</Project>
-      <Name>Net</Name>
-    </ProjectReference>
     <ProjectReference Include="..\HtmlParser\HtmlParser.csproj">
       <Project>{e4d0300e-5b67-4cda-b669-369d6e76c581}</Project>
       <Name>HtmlParser</Name>
@@ -162,6 +158,10 @@
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{41f9a5af-df85-44ba-ba13-ff3da2b82380}</Project>
       <Name>Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Net\Net.csproj">
+      <Project>{7ab36ccf-5ffd-4780-a54e-a102eca028b5}</Project>
+      <Name>Net</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
