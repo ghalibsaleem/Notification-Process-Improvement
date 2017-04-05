@@ -63,8 +63,10 @@ namespace Notification_PI.NetHelper
         {
             await Task.Run(() =>
             {
-                if (IsConnected)
-                    LoadRecentMessages(LastSeqNo);
+                //if (IsConnected)
+                    
+                    //LoadRecentMessages(LastSeqNo);
+                LoadMessagesWithFilter();
             });
         }
 

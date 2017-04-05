@@ -6496,9 +6496,11 @@ namespace LumiSoft.Net.IMAP.Client
                         wait.Set();
                     }
                     wait.WaitOne();
-
+                   
                     if(op.Error != null){
-                        throw op.Error;
+
+                        var s = 0;
+                        //throw op.Error;
                     }
                 }
             }

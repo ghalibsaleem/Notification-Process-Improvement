@@ -32,6 +32,8 @@ namespace D.Net.EmailClient
             set { _Messages = value; }
         }
 
+        
+
         public void Connect(String server, String User, String pass, int port, bool useSSl)
         {
             try
@@ -77,6 +79,7 @@ namespace D.Net.EmailClient
             if (!_IsConnected) throw new EMailException { ExceptionType = EMAIL_EXCEPTION_TYPE.NOT_CONNECTED };
             if (!String.IsNullOrWhiteSpace(_CurrentFolder))
             {
+                
                 Client.Fetch(
                     false,
 
@@ -151,6 +154,33 @@ namespace D.Net.EmailClient
         public void LoadMessages()
         {
             LoadMessages("1", "*");
+        }
+
+        public void LoadMessagesWithFilter()
+        {
+            if (!_IsConnected) throw new EMailException { ExceptionType = EMAIL_EXCEPTION_TYPE.NOT_CONNECTED };
+            if (!String.IsNullOrWhiteSpace(_CurrentFolder))
+            {
+                IMAP_Search_Key_Since d = new IMAP_Search_Key_Since(DateTime.Today.AddDays(-3));
+                int[] seq = Client.Search(
+                    false,
+                    Encoding.ASCII,
+                    d
+                    );
+                if (seq.Length > 0)
+                {
+                    var seqString = "";
+                    for (int i = 0; i < seq.Length - 1; i++)
+                    {
+                        if(i < seq.Length - 2 )
+                            seqString += seq[i].ToString() + ",";
+                        else
+                            seqString += seq[i].ToString();
+                    }
+                    
+                    LoadMessages(seq[0].ToString(), seq[seq.Length - 1].ToString());
+                }
+            }
         }
 
         public int GetMessagesCount()

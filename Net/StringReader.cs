@@ -87,6 +87,7 @@ namespace LumiSoft.Net
 				return retVal;
 			}
 			else{
+                //return "";
 				throw new Exception("Read length can't be bigger than source string !");
 			}
 		}

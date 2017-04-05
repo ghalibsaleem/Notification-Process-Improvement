@@ -63,6 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Cipher\AESHelper.cs" />
     <Compile Include="Commands\CommandHandler.cs" />
     <Compile Include="Converters\PropertyAttributeConverter.cs" />
     <Compile Include="Converters\PropertyToValueConverter.cs" />

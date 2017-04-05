@@ -44,11 +44,12 @@ namespace Notification_PI.ModelsHelper
             IMAPAsync d = new IMAPAsync();
             await d.ConnectAsync("webmail.maersk.net", user.Email, user.Password, 993, true);
             await d.SetCurrentFolderAsync("Inbox");
+            //await d.LoadMessagesAsync("450", "*");
             await d.LoadRecentMessagesAsync(lastSeq);
 
 
             List<IEmail> Messages = d.Messages
-                .Where(x => x.Subject.Contains("SIM Application Deployment Management Dashboard"))
+                .Where(x => x.Subject.Contains("Alert Notification PI - Item ID"))
                 .OrderByDescending(x => x.Date).ToList();
             foreach (var item in Messages)
             {
@@ -57,11 +58,11 @@ namespace Notification_PI.ModelsHelper
                 Parser p = new Parser();
                 if(item.TextBody == null)
                 {
-                    break;
+                    continue;
                 }
                 SIT2_Item table = p.ParseHtml(item.TextBody);
                 if (table == null)
-                    break;
+                    continue;
                 table.Id = item.Subject.Remove(0, item.Subject.IndexOf(" ID") + 3)
                 ;
                 list.Add(table);

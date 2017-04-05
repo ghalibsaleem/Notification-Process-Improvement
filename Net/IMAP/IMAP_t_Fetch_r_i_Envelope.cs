@@ -401,6 +401,8 @@ namespace LumiSoft.Net.IMAP
                     retVal.Add(new Mail_t_Mailbox(personalName,mailboxName + "@" + hostName));
 
                     // Eat address ending ")".
+                    if (r.Available <= 0)
+                        break;
                     r.ReadSpecifiedLength(1);
                 }
 
