@@ -63,13 +63,19 @@ namespace Notification_PI.NetHelper
         {
             await Task.Run(() =>
             {
-                //if (IsConnected)
-                    
-                    //LoadRecentMessages(LastSeqNo);
-                LoadMessagesWithFilter();
+                if (IsConnected)
+                    LoadRecentMessages(LastSeqNo);
             });
         }
 
+        public async Task LoadMessagesWithDateFilterAsync(DateTime dateTime)
+        {
+            await Task.Run(() =>
+            {
+                if (IsConnected)
+                    LoadMessagesWithDateTimeFilter(dateTime);
+            });
+        }
         public async Task SetCurrentFolderAsync(string folder)
         {
             await Task.Run(() =>

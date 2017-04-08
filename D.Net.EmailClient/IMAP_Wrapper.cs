@@ -156,13 +156,13 @@ namespace D.Net.EmailClient
             LoadMessages("1", "*");
         }
 
-        public void LoadMessagesWithFilter()
+        public void LoadMessagesWithDateTimeFilter(DateTime dateTime)
         {
             if (!_IsConnected) throw new EMailException { ExceptionType = EMAIL_EXCEPTION_TYPE.NOT_CONNECTED };
             if (!String.IsNullOrWhiteSpace(_CurrentFolder))
             {
-                IMAP_Search_Key_Since d = new IMAP_Search_Key_Since(DateTime.Today.AddDays(-3));
-                int[] seq = Client.Search(
+                IMAP_Search_Key_Since d = new IMAP_Search_Key_Since(dateTime);
+                int[] seq =Client.Search(
                     false,
                     Encoding.ASCII,
                     d

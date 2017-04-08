@@ -9,5 +9,7 @@ namespace Models
     public class Settings
     {
         public int LastSeq { get; set; }
+
+        public DateTime LastDate { get; set; }
     }
 }

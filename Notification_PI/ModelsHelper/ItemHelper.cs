@@ -24,6 +24,8 @@ namespace Notification_PI.ModelsHelper
             list1 = list1.OrderByDescending(a => a.Id).ToList();
             int lastSeq = 0;
 
+            DateTime lastDate = DateTime.Now.AddDays(-2);
+
             FileHandler fHandler = new FileHandler();
             var jsonString = await fHandler.ReadFromSystem(FileHandler.FileName.Settings);
             if (jsonString != null)
@@ -31,21 +33,21 @@ namespace Notification_PI.ModelsHelper
                 JSONHandler jHandler = new JSONHandler();
                 Settings setting =  jHandler.Deserialize<Settings>(jsonString);
                 lastSeq = setting.LastSeq;
+                lastDate = setting.LastDate;
             }
 
-            List<SIT2_Item> list2 = await GetItemsFromMail(lastSeq, user);
+            List<SIT2_Item> list2 = await GetItemsFromMail(lastDate, user);
             
             await WriteItemToSystem(list2.Concat(list1).ToList());
             return new ObservableCollection<SIT2_Item>(list2.Concat(list1).ToList());
         }
-        public async Task<List<SIT2_Item>> GetItemsFromMail(int lastSeq,User user)
+        public async Task<List<SIT2_Item>> GetItemsFromMail(DateTime lastDate,User user)
         {
             List<SIT2_Item> list = new List<SIT2_Item>();
             IMAPAsync d = new IMAPAsync();
             await d.ConnectAsync("webmail.maersk.net", user.Email, user.Password, 993, true);
             await d.SetCurrentFolderAsync("Inbox");
-            //await d.LoadMessagesAsync("450", "*");
-            await d.LoadRecentMessagesAsync(lastSeq);
+            await d.LoadMessagesWithDateFilterAsync(lastDate);
 
 
             List<IEmail> Messages = d.Messages
@@ -81,10 +83,12 @@ namespace Notification_PI.ModelsHelper
 
                     setting = jHandler.Deserialize<Settings>(jsonString);
                     setting.LastSeq = d.Messages.Last().SequenceNumber;
+                    setting.LastDate = DateTime.Now;
                 }
                 else
                 {
                     setting = new Settings();
+                    setting.LastDate = DateTime.Now;
                 }
 
 
