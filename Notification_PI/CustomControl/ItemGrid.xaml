@@ -17,6 +17,11 @@
     <materialDesign:DialogHost x:Name="gridDialogHost" Identifier="gridDialogHost" 
                                DialogClosing="gridDialogHost_DialogClosing"
                                DialogOpened="gridDialogHost_DialogOpened">
+        <materialDesign:DialogHost.DialogContent>
+            <DockPanel Height="100" Width="100">
+                
+            </DockPanel>
+        </materialDesign:DialogHost.DialogContent>
         <StackPanel Margin="5 5 5 5" x:Name="stackDialog">
             <DataGrid Margin="0 8 0 0" ItemsSource="{Binding Sit_ItemsCollection}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
                       materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">

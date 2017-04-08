@@ -67,6 +67,9 @@
     <Compile Include="Commands\CommandHandler.cs" />
     <Compile Include="Converters\PropertyAttributeConverter.cs" />
     <Compile Include="Converters\PropertyToValueConverter.cs" />
+    <Compile Include="CustomControl\ItemConfirmation.xaml.cs">
+      <DependentUpon>ItemConfirmation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControl\ItemControl.xaml.cs">
       <DependentUpon>ItemControl.xaml</DependentUpon>
     </Compile>
@@ -78,6 +81,10 @@
     <Compile Include="ViewModels\ItemControlViewModel.cs" />
     <Compile Include="ViewModels\ItemGridViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Page Include="CustomControl\ItemConfirmation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControl\ItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

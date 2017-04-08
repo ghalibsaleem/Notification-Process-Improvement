@@ -38,19 +38,20 @@ namespace Notification_PI.CustomControl
 
 
             };
+            
             Binding widthBinding = new Binding();
             widthBinding.ElementName = "stackDialog";
             widthBinding.Path = new PropertyPath("ActualWidth");
-            widthBinding.Mode = BindingMode.OneWay;
+            widthBinding.Mode = BindingMode.TwoWay;
             BindingOperations.SetBinding(view, ItemControl.WidthProperty, widthBinding);
 
             Binding heightBinding = new Binding();
             heightBinding.ElementName = "stackDialog";
             heightBinding.Path = new PropertyPath("ActualHeight");
-            heightBinding.Mode = BindingMode.OneWay;
+            heightBinding.Mode = BindingMode.TwoWay;
             BindingOperations.SetBinding(view, ItemControl.HeightProperty, heightBinding);
-
-            await DialogHost.Show(view, "gridDialogHost", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
+            
+            await DialogHost.Show(view, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
         }
 
         private void gridDialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
