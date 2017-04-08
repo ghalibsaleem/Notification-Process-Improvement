@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Notification_PI.Cipher;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,15 +18,26 @@ namespace Notification_PI.FileHelper
         }
         public async Task<bool> WriteOnSystem(string jsonString,FileName name)
         {
-            string path = Environment.CurrentDirectory +"\\" +name.ToString() + ".json";
+            string path = Environment.CurrentDirectory +"\\" +name.ToString() + ".dat";
+
+            await Task.Run(
+                () =>
+                {
+                    AESHelper cipher = new AESHelper();
+                    byte[] bytes = cipher.Encrypt(jsonString);
+
+
+
+                    using (BinaryWriter bwriter = new BinaryWriter(File.CreateText(path).BaseStream, Encoding.UTF8))
+                    {
+
+                        bwriter.Write(bytes);
+                    }
+                }
+                );
             
-            using (StreamWriter writer = File.CreateText(path))
-            {
-                await writer.WriteAsync(jsonString);
-                
-                
-            }
-            File.Encrypt(path);
+             
+            
             return true;
         }
 
@@ -34,14 +46,25 @@ namespace Notification_PI.FileHelper
             String result = null;
             try
             {
-                string path = Environment.CurrentDirectory +"\\" +name.ToString() + ".json";
-                File.Decrypt(path);
-                using (StreamReader reader = File.OpenText(path))
-                {
+                string path = Environment.CurrentDirectory +"\\" +name.ToString() + ".dat";
+                
+                
 
-                    result = await reader.ReadToEndAsync();
-                    return result;
+                using (BinaryReader breader = new BinaryReader(File.OpenText(path).BaseStream))
+                {
+                    await Task.Run(
+                        () =>
+                            {
+                                byte[] bytes = breader.ReadBytes((int)breader.BaseStream.Length);
+                                AESHelper cipher = new AESHelper();
+                                result = cipher.Decrypt(bytes);
+                            }
+                        );
+                    
                 }
+                    //result = await reader.ReadToEndAsync();
+                return result;
+                
             }
             catch (Exception)
             {
@@ -53,7 +76,7 @@ namespace Notification_PI.FileHelper
 
         public async Task<bool> DeleteFile(FileName name)
         {
-            string path = Environment.CurrentDirectory + name.ToString() + ".json";
+            string path = Environment.CurrentDirectory + name.ToString() + ".dat";
             if (File.Exists(path))
             {
                 await Task.Run(() => { File.Delete(path); });
