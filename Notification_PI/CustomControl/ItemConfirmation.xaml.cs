@@ -1,4 +1,6 @@
 ﻿using MaterialDesignThemes.Wpf;
+using Notification_PI.NetHelper;
+using Notification_PI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,9 +38,13 @@ namespace Notification_PI.CustomControl
             DialogHost.CloseDialogCommand.Execute(this, null);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            string[] toMail,ccMail,bccMail;
+            ItemControlViewModel model = this.DataContext as ItemControlViewModel;
 
+            SMTPAsync smtpObj = new SMTPAsync();
+            bool result = await smtpObj.SendMessage();
         }
     }
 }

@@ -11,6 +11,8 @@
         TextOptions.TextRenderingMode="Auto"   
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
+        MinHeight="550"
+        MinWidth="700"
         xmlns:local="clr-namespace:Notification_PI"
         xmlns:localCustomControl="clr-namespace:Notification_PI.CustomControl"
         mc:Ignorable="d"
