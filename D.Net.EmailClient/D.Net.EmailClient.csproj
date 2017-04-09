@@ -45,6 +45,7 @@
     <Compile Include="IMAP_Wrapper.cs" />
     <Compile Include="POP3_Wrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SMTP_Wrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\D.Net.EmailInterfaces\D.Net.EmailInterfaces.csproj">

@@ -16927,6 +16927,17 @@
             <exception cref="T:System.ArgumentException">Is raised when any of the method arguments has invalid value.</exception>
             <exception cref="T:LumiSoft.Net.SMTP.Client.SMTP_ClientException">Is raised when SMTP server returns error.</exception>
         </member>
+        <member name="M:LumiSoft.Net.SMTP.Client.SMTP_Client.QuickSendSmartHost(System.String,System.Int32,System.Boolean,System.String,System.String,LumiSoft.Net.Mail.Mail_Message)">
+            <summary>
+            Sends message by using specified smart host.
+            </summary>
+            <param name="host">host addr</param>
+            <param name="port">host port</param>
+            <param name="ssl"> </param>
+            <param name="userName"></param>
+            <param name="password"></param>
+            <param name="message"></param>
+        </member>
         <member name="M:LumiSoft.Net.SMTP.Client.SMTP_Client.QuickSendSmartHost(System.String,System.Int32,System.String,System.String[],System.IO.Stream)">
             <summary>
             Sends message by using specified smart host.

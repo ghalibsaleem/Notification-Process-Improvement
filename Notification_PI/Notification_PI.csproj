@@ -78,6 +78,7 @@
     <Compile Include="ModelsHelper\ItemHelper.cs" />
     <Compile Include="ModelsHelper\UserHelper.cs" />
     <Compile Include="NetHelper\IMAPAsync.cs" />
+    <Compile Include="NetHelper\SMTPAsync.cs" />
     <Compile Include="ViewModels\ItemControlViewModel.cs" />
     <Compile Include="ViewModels\ItemGridViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

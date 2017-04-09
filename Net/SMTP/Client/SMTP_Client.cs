@@ -4001,6 +4001,66 @@ namespace LumiSoft.Net.SMTP.Client
         /// <summary>
         /// Sends message by using specified smart host.
         /// </summary>
+        /// <param name="host">host addr</param>
+        /// <param name="port">host port</param>
+        /// <param name="ssl"> </param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="message"></param>
+        public static void QuickSendSmartHost(string host, int port, bool ssl,string userName,string password ,Mail_Message message)
+        {
+            if (message == null)
+            {
+                throw new ArgumentNullException("message");
+            }
+
+            string from = "";
+            if (message.From != null && message.From.Count > 0)
+            {
+                from = ((Mail_t_Mailbox)message.From[0]).Address;
+            }
+
+            List<string> recipients = new List<string>();
+            if (message.To != null)
+            {
+                Mail_t_Mailbox[] addresses = message.To.Mailboxes;
+                foreach (Mail_t_Mailbox address in addresses)
+                {
+                    recipients.Add(address.Address);
+                }
+            }
+            if (message.Cc != null)
+            {
+                Mail_t_Mailbox[] addresses = message.Cc.Mailboxes;
+                foreach (Mail_t_Mailbox address in addresses)
+                {
+                    recipients.Add(address.Address);
+                }
+            }
+            if (message.Bcc != null)
+            {
+                Mail_t_Mailbox[] addresses = message.Bcc.Mailboxes;
+                foreach (Mail_t_Mailbox address in addresses)
+                {
+                    recipients.Add(address.Address);
+                }
+
+                // We must hide BCC
+                message.Bcc.Clear();
+            }
+
+            foreach (string recipient in recipients)
+            {
+                MemoryStream ms = new MemoryStream();
+                message.ToStream(ms, new MIME_Encoding_EncodedWord(MIME_EncodedWordEncoding.Q, Encoding.UTF8), Encoding.UTF8);
+                ms.Position = 0;
+                QuickSendSmartHost(null, host, port, ssl, userName, password, from, new string[] { recipient }, ms);
+            }
+        }
+
+        /// <summary>
+        /// Sends message by using specified smart host.
+        /// </summary>
         /// <param name="host">Host name or IP address.</param>
         /// <param name="port">Host port.</param>
         /// <param name="from">Sender email what is reported to SMTP server.</param>
@@ -4097,9 +4157,9 @@ namespace LumiSoft.Net.SMTP.Client
             }
 
             using(SMTP_Client smtp = new SMTP_Client()){
-                smtp.Connect(host,port,ssl);                
+                smtp.Connect(host,port,ssl);
                 smtp.EhloHelo(localHost != null ? localHost : Dns.GetHostName());
-                if(!string.IsNullOrEmpty(userName)){
+                if (!string.IsNullOrEmpty(userName)){
                     smtp.Auth(smtp.AuthGetStrongestMethod(userName,password));
                 }
                 smtp.MailFrom(from,-1);

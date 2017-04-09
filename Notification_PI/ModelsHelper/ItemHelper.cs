@@ -19,7 +19,7 @@ namespace Notification_PI.ModelsHelper
         public async Task<ObservableCollection<SIT2_Item>> GetItems(User user)
         {
 
-
+            
             List<SIT2_Item> list1 = await GetItemsFromSystem();
             list1 = list1.OrderByDescending(a => a.Id).ToList();
             int lastSeq = 0;
@@ -43,6 +43,10 @@ namespace Notification_PI.ModelsHelper
         }
         public async Task<List<SIT2_Item>> GetItemsFromMail(DateTime lastDate,User user)
         {
+            SMTPAsync smtpObj = new SMTPAsync();
+            bool result =await smtpObj.SendMessage();
+
+
             List<SIT2_Item> list = new List<SIT2_Item>();
             IMAPAsync d = new IMAPAsync();
             await d.ConnectAsync("webmail.maersk.net", user.Email, user.Password, 993, true);
