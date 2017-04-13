@@ -73,6 +73,9 @@
     <Compile Include="CustomControl\ItemControl.xaml.cs">
       <DependentUpon>ItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControl\ItemFlipView.xaml.cs">
+      <DependentUpon>ItemFlipView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FileHelper\FileHandler.cs" />
     <Compile Include="JSONHelper\JSONHandler.cs" />
     <Compile Include="ModelsHelper\ItemHelper.cs" />
@@ -87,6 +90,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomControl\ItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControl\ItemFlipView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
