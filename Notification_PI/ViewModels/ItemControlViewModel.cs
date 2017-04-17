@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -9,8 +10,13 @@ using System.Threading.Tasks;
 
 namespace Notification_PI.ViewModels
 {
-    public class ItemControlViewModel
+    public class ItemControlViewModel: INotifyPropertyChanged
     {
+
+        public ItemControlViewModel()
+        {
+
+        }
 
         public ItemControlViewModel(SIT2_Item item)
         {
@@ -38,10 +44,18 @@ namespace Notification_PI.ViewModels
 
         private SIT2_Item _sit_Object;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            PropertyChanged?.Invoke(this, e);
+        }
+
         public SIT2_Item SitObject
         {
             get { return _sit_Object; }
-            set { _sit_Object = value; }
+            set { _sit_Object = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("SitObject"));
+            }
         }
 
         public bool Initial { get; set; }

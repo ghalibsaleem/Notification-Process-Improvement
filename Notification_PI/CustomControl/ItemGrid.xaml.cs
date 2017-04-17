@@ -32,13 +32,14 @@ namespace Notification_PI.CustomControl
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            var view = new ItemControl()
+            var view = new ItemFlipView()
             {
                 DataContext = new ItemControlViewModel((sender as Button).DataContext as SIT2_Item)
 
 
             };
             
+            /*
             Binding widthBinding = new Binding();
             widthBinding.ElementName = "stackDialog";
             widthBinding.Path = new PropertyPath("ActualWidth");
@@ -50,6 +51,8 @@ namespace Notification_PI.CustomControl
             heightBinding.Path = new PropertyPath("ActualHeight");
             heightBinding.Mode = BindingMode.TwoWay;
             BindingOperations.SetBinding(view, ItemControl.HeightProperty, heightBinding);
+            */
+
             
             await DialogHost.Show(view, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
         }

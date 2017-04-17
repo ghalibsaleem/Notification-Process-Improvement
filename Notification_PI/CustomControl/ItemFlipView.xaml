@@ -4,79 +4,185 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:Notification_PI.Converters"
+             xmlns:viewmodels="clr-namespace:Notification_PI.ViewModels"
              xmlns:local="clr-namespace:Notification_PI.CustomControl"
              mc:Ignorable="d" 
+             MaxHeight="500"
+             MaxWidth="650"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <ResourceDictionary>
+        <converters:PropertyAttributeConverter x:Key="PropertyAttributeConverter"/>
+        <converters:PropertyToValueConverter x:Key="PropertyToValueConverter" />
+        <DataTemplate x:Key="deatilView" DataType="{x:Type viewmodels:ItemControlViewModel}">
+            <Border x:Name="Border" Padding="8" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource MaterialDesignDivider}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock x:Name="textblock" VerticalAlignment="Bottom" TextWrapping="Wrap" FontWeight="Bold" Grid.Column="0" Text="{Binding Converter={StaticResource PropertyAttributeConverter}}" />
+                    <TextBox Grid.Column="1">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource PropertyToValueConverter}" Mode="TwoWay">
+                                <MultiBinding.Bindings>
+                                    <Binding ElementName="mainGrid" Path="DataContext"/>
+                                    <Binding ElementName="textblock" Path="DataContext"/>
+                                </MultiBinding.Bindings>
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                </Grid>
+            </Border>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource MaterialDesignSelection}" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <ResourceDictionary x:Key="dict">
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Flipper.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Popupbox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" Margin="4 4 0 0" >
+        <materialDesign:Flipper>
             <materialDesign:Flipper.FrontContent>
-                <Grid Height="256" Width="200">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="160" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <materialDesign:ColorZone Mode="PrimaryLight" VerticalAlignment="Stretch">
-                        <materialDesign:PackIcon Kind="AccountCircle" Height="128" Width="128"
-                                                 VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    </materialDesign:ColorZone>
-                    <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock>James Willock</TextBlock>
-                        <Button Style="{StaticResource MaterialDesignFlatButton}"
-                                Command="{x:Static materialDesign:Flipper.FlipCommand}"
-                                Margin="0 4 0 0"
-                                >EDIT</Button>
-                    </StackPanel>
+                <Grid x:Name="mainGrid">
+                    <GroupBox Header="Item And its Action" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                                        <materialDesign:PackIcon Kind="TableEdit" Height="32" Width="32" VerticalAlignment="Center" />
+                                        <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Text="{Binding}"/>
+                                    </StackPanel>
+                                    <Button DockPanel.Dock="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Margin="0,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                                        X
+                                    </Button>
+                                </DockPanel>
+
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <ScrollViewer 
+                            HorizontalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.HorizontalScrollBarVisibilityRequirement}"
+                            VerticalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.VerticalScrollBarVisibilityRequirement}" 
+                            Padding="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.MarginRequirement}">
+                            <StackPanel>
+                                <ItemsControl x:Name="mainList" Grid.Column="2" ItemsSource="{Binding ItemProperties}"
+                                    Grid.IsSharedSizeScope="True" ItemTemplate="{StaticResource deatilView}">
+                                    
+                                </ItemsControl>
+                                <DockPanel Margin="5 10 5 10">
+                                    <Button HorizontalAlignment="Left" Click="Button_Click" Command="{x:Static materialDesign:Flipper.FlipCommand}">Initial Mail</Button>
+                                    <Button HorizontalAlignment="Right" Click="Button_Click" Command="{x:Static materialDesign:Flipper.FlipCommand}">Final Mail</Button>
+                                </DockPanel>
+                            </StackPanel>
+
+                        </ScrollViewer>
+                    </GroupBox>
                 </Grid>
             </materialDesign:Flipper.FrontContent>
             <materialDesign:Flipper.BackContent>
-                <Grid Height="256" Width="200">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <materialDesign:ColorZone Mode="Accent" Padding="6">
-                        <StackPanel Orientation="Horizontal">
-                            <Button Style="{StaticResource MaterialDesignToolForegroundButton}"
-                                Command="{x:Static materialDesign:Flipper.FlipCommand}"
-                                HorizontalAlignment="Left">
-                                <materialDesign:PackIcon Kind="ArrowLeft" HorizontalAlignment="Right" />
-                            </Button>
-                            <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">EDIT USER</TextBlock>
-                        </StackPanel>
-                    </materialDesign:ColorZone>
-                    <Grid Grid.Row="1" Margin="0 6 0 0" HorizontalAlignment="Center" VerticalAlignment="Top"
-                          Width="172">
+                <GroupBox x:Name="groupBox" Header="Item And its Action" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                    <GroupBox.HeaderTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                                    <Button Style="{StaticResource MaterialDesignToolForegroundButton}"
+                                        Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                        HorizontalAlignment="Left">
+                                        <materialDesign:PackIcon Kind="ArrowLeft" HorizontalAlignment="Right" />
+                                    </Button>
+                                    <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Text="{Binding}"/>
+                                </StackPanel>
+                                <Button DockPanel.Dock="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"  Margin="0,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                                    X
+                                </Button>
+                            </DockPanel>
+
+                        </DataTemplate>
+                    </GroupBox.HeaderTemplate>
+                    <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBox materialDesign:HintAssist.Hint="First name" materialDesign:HintAssist.IsFloating="True"
-                                 Margin="0 12 0 0">James</TextBox>
-                        <TextBox Grid.Row="1" materialDesign:HintAssist.Hint="Last name" materialDesign:HintAssist.IsFloating="True"
-                                 Margin="0 12 0 0">Willock</TextBox>
-                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Right">
-                            <TextBlock VerticalAlignment="Center">Email Contact</TextBlock>
-                            <ToggleButton Margin="8 0 0 0"></ToggleButton>
-                        </StackPanel>
-                        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Right">
-                            <TextBlock VerticalAlignment="Center">Telephone Contact</TextBlock>
-                            <ToggleButton Margin="8 0 0 0"></ToggleButton>
-                        </StackPanel>
+
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="5*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="To :" VerticalAlignment="Bottom"/>
+                            <TextBox Grid.Row="0" Grid.Column="1"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Cc :" VerticalAlignment="Bottom"/>
+                            <TextBox Grid.Row="1" Grid.Column="1"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Bcc :" VerticalAlignment="Bottom"/>
+                            <TextBox Grid.Row="3" Grid.Column="1"/>
+                        </Grid>
+                        <Separator Grid.Row="1" VerticalAlignment="Bottom"/>
+                        <ScrollViewer Grid.Row="2"
+                                HorizontalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.HorizontalScrollBarVisibilityRequirement}"
+                                VerticalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.VerticalScrollBarVisibilityRequirement}" 
+                                Padding="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.MarginRequirement}">
+                            <StackPanel>
+                                <ItemsControl x:Name="mainListFlip" Grid.Column="2" ItemsSource="{Binding ItemProperties}"
+                                    Grid.IsSharedSizeScope="True">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type viewmodels:ItemControlViewModel}">
+                                            <Border x:Name="Border" Padding="8" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource MaterialDesignDivider}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="2*"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock x:Name="textblock" TextWrapping="Wrap" FontWeight="Bold" Grid.Column="0" Text="{Binding Converter={StaticResource PropertyAttributeConverter}}" />
+                                                    <TextBlock Grid.Column="1" TextWrapping="Wrap">
+                                                        <TextBlock.Text>
+                                                            <MultiBinding Converter="{StaticResource PropertyToValueConverter}">
+                                                                <MultiBinding.Bindings>
+                                                                    <Binding ElementName="mainGrid" Path="DataContext"/>
+                                                                    <Binding ElementName="textblock" Path="DataContext"/>
+                                                                </MultiBinding.Bindings>
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+
+                                                </Grid>
+                                            </Border>
+                                            <DataTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource MaterialDesignSelection}" />
+                                                </DataTrigger>
+                                            </DataTemplate.Triggers>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <DockPanel Margin="5 10 5 10">
+                                    <Button HorizontalAlignment="Left" Click="Button_Click">Send</Button>
+                                    <Button HorizontalAlignment="Right" Click="Cancel_Button_Clicked">Cancel</Button>
+                                </DockPanel>
+                            </StackPanel>
+
+                        </ScrollViewer>
                     </Grid>
-                </Grid>
+                </GroupBox>
             </materialDesign:Flipper.BackContent>
         </materialDesign:Flipper>
     </Grid>
