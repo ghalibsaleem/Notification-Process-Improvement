@@ -32,7 +32,7 @@ namespace Notification_PI.CustomControl
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            var view = new ItemFlipView()
+            var view = new ItemControl()
             {
                 DataContext = new ItemControlViewModel((sender as Button).DataContext as SIT2_Item)
 

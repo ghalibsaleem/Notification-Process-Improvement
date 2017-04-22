@@ -3,7 +3,9 @@ using Notification_PI.NetHelper;
 using Notification_PI.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -42,9 +44,23 @@ namespace Notification_PI.CustomControl
         {
             string[] toMail,ccMail,bccMail;
             ItemControlViewModel model = this.DataContext as ItemControlViewModel;
+            toMail = toMailBox.Text.Split(new char[] { ';' }).Where(x => x!="").ToArray();
+            ccMail = ccMailBox.Text.Split(new char[] { ';' }).Where(x => x != "").ToArray();
+            bccMail = bccMailBox.Text.Split(new char[] { ';' }).Where(x => x != "").ToArray();
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "Notification_PI." + "MailTemplate.txt";
 
+            string resource = null;
+            var ds = assembly.GetManifestResourceNames();
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    resource = reader.ReadToEnd();
+                }
+            }
             SMTPAsync smtpObj = new SMTPAsync();
-            bool result = await smtpObj.SendMessage();
+            bool result = await smtpObj.SendMessage(toMail,ccMail,bccMail,"","",new System.Net.NetworkCredential("rajat.sharma@maersk.com","Mar@2017"));
         }
     }
 }

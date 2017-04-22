@@ -180,6 +180,11 @@
       <Name>Net</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Data\Template.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Data\MailTemplate.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

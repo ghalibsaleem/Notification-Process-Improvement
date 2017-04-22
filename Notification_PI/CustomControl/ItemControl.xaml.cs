@@ -4,6 +4,7 @@ using Notification_PI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -65,6 +66,14 @@ namespace Notification_PI.CustomControl
         private void gridDialogHost_DialogOpened(object sender, DialogOpenedEventArgs eventArgs)
         {
             eventArgs.Handled = true;
+        }
+
+        private void TextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            var textBox = (TextBox)sender;
+            var propInfo = textBox.DataContext as PropertyInfo;
+            var model = (ItemControlViewModel)DataContext;
+            propInfo.SetValue(model.SitObject, textBox.Text);
         }
     }
 }

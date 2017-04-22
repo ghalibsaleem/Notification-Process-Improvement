@@ -26,7 +26,13 @@ namespace HtmlParser
                 {
                     SIT2_Item item = new SIT2_Item();
                     int counter = 0;
-                    HtmlNode tbody = table.SelectNodes("tbody").First();
+                    HtmlNode tbody;
+                    if (table.SelectSingleNode("tbody") != null)
+                    {
+                        tbody = table.SelectNodes("tbody").First();
+                    }
+                    else
+                        tbody = table;
                     foreach (HtmlNode row in tbody.SelectNodes("tr"))
                     {
                         int i = 0;
@@ -66,7 +72,7 @@ namespace HtmlParser
                             i++;
                         }
                     }
-                    if(counter > 27)
+                    if(counter >= 27)
                     {
                         
                         return item;

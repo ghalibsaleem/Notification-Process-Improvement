@@ -57,11 +57,11 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="To :" VerticalAlignment="Bottom"/>
-                    <TextBox Grid.Row="0" Grid.Column="1"/>
+                    <TextBox x:Name="toMailBox" Grid.Row="0" Grid.Column="1"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Cc :" VerticalAlignment="Bottom"/>
-                    <TextBox Grid.Row="1" Grid.Column="1"/>
+                    <TextBox x:Name="ccMailBox" Grid.Row="1" Grid.Column="1"/>
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Bcc :" VerticalAlignment="Bottom"/>
-                    <TextBox Grid.Row="3" Grid.Column="1"/>
+                    <TextBox x:Name="bccMailBox" Grid.Row="3" Grid.Column="1"/>
                 </Grid>
                 <Separator Grid.Row="1" VerticalAlignment="Bottom"/>
                 <ScrollViewer Grid.Row="2"
@@ -69,8 +69,17 @@
                     VerticalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.VerticalScrollBarVisibilityRequirement}" 
                     Padding="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.MarginRequirement}">
                     <StackPanel>
+                        <Grid Margin="5 10 5 10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="Wrap" FontWeight="Bold" Grid.Column="0" Text="Greeting Text" />
+                            <TextBox x:Name="greetingText" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True"/>
+                        </Grid>
+                        <Separator BorderThickness="1" VerticalAlignment="Bottom"/>
                         <ItemsControl x:Name="mainList" Grid.Column="2" ItemsSource="{Binding ItemProperties}"
-                      Grid.IsSharedSizeScope="True">
+                            Grid.IsSharedSizeScope="True">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="{x:Type viewmodels:ItemControlViewModel}">
                                     <Border x:Name="Border" Padding="8" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource MaterialDesignDivider}">
@@ -102,6 +111,14 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+                        <Grid Margin="5 10 5 10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="Wrap" FontWeight="Bold" Grid.Column="0" Text="Signature" />
+                            <TextBox x:Name="signatureText" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True"/>
+                        </Grid>
                         <DockPanel Margin="5 10 5 10">
                             <Button HorizontalAlignment="Left" Click="Button_Click">Send</Button>
                             <Button HorizontalAlignment="Right" Click="Cancel_Button_Clicked">Cancel</Button>

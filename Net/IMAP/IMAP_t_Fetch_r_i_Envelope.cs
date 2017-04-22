@@ -148,12 +148,21 @@ namespace LumiSoft.Net.IMAP
             // Read "to"
             Mail_t_Address[] to = ReadAddresses(r);
             
-            // Read "cc"
-            Mail_t_Address[] cc = ReadAddresses(r);
-            
-            // Read "bcc"
-            Mail_t_Address[] bcc = ReadAddresses(r);
-            
+            Mail_t_Address[] cc = new Mail_t_Address[0];
+            Mail_t_Address[] bcc = new Mail_t_Address[0];
+            try
+            {
+                // Read "cc"
+                cc = ReadAddresses(r);
+
+                // Read "bcc"
+                bcc = ReadAddresses(r);
+            }
+            catch (Exception)
+            {
+
+                //throw;
+            }
             // Read "in-reply-to"
             string inReplyTo = r.ReadWord();
             

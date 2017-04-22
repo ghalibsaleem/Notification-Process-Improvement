@@ -11,6 +11,7 @@ using Notification_PI.FileHelper;
 using Notification_PI.NetHelper;
 using HtmlParser;
 using D.Net.EmailInterfaces;
+using System.Globalization;
 
 namespace Notification_PI.ModelsHelper
 {
@@ -24,7 +25,7 @@ namespace Notification_PI.ModelsHelper
             list1 = list1.OrderByDescending(a => a.Id).ToList();
             int lastSeq = 0;
 
-            DateTime lastDate = DateTime.Now.AddDays(-30);
+            DateTime lastDate = DateTime.Now.AddDays(-5);
 
             FileHandler fHandler = new FileHandler();
             var jsonString = await fHandler.ReadFromSystem(FileHandler.FileName.Settings);
@@ -37,10 +38,18 @@ namespace Notification_PI.ModelsHelper
             }
 
             List<SIT2_Item> list2 = await GetItemsFromMail(lastDate, user);
-            
-            await WriteItemToSystem(list2.Concat(list1).ToList());
-            return new ObservableCollection<SIT2_Item>(list2.Concat(list1).ToList());
+            list2 = list2.Concat(list1).ToList();
+            list2 = list2.GroupBy(x => x.Id).Select(x => x.First()).ToList();
+
+            list2 = list2.Where(x =>
+                DateTime.Parse(x.DeploymentWindow).Date >= DateTime.Now.Date
+            ).ToList();
+
+            await WriteItemToSystem(list2);
+            return new ObservableCollection<SIT2_Item>(list2);
         }
+
+        
         public async Task<List<SIT2_Item>> GetItemsFromMail(DateTime lastDate,User user)
         {
             List<SIT2_Item> list = new List<SIT2_Item>();
@@ -49,7 +58,7 @@ namespace Notification_PI.ModelsHelper
             await d.SetCurrentFolderAsync("Inbox");
             await d.LoadMessagesWithDateFilterAsync(lastDate);
 
-
+            
             List<IEmail> Messages = d.Messages
                 .Where(x => x.Subject.Contains("Alert Notification PI - Item ID") && x.From.Contains("noreply@maersk.com"))
                 .OrderByDescending(x => x.Date).ToList();
@@ -82,13 +91,14 @@ namespace Notification_PI.ModelsHelper
                 {
 
                     setting = jHandler.Deserialize<Settings>(jsonString);
-                    setting.LastSeq = d.Messages.Last().SequenceNumber;
-                    setting.LastDate = DateTime.Now;
+                    setting.LastSeq = Messages.First().SequenceNumber;
+                    setting.LastDate = Messages.First().Date;
                 }
                 else
                 {
                     setting = new Settings();
-                    setting.LastDate = DateTime.Now;
+                    setting.LastSeq = Messages.First().SequenceNumber;
+                    setting.LastDate = Messages.First().Date;
                 }
 
 
