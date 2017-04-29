@@ -14,8 +14,21 @@ namespace Notification_PI.FileHelper
         public enum FileName{
             SitItem,
             UserDetails,
-            Settings
+            Settings,
+            Template,
+            DeploymentData,
+            RequesterData,
+            Contacts
         }
+
+        public enum Extension
+        {
+            TXT,
+            HTML,
+            JSON,
+            DAT
+        }
+
         public async Task<bool> WriteOnSystem(string jsonString,FileName name)
         {
             string path = Environment.CurrentDirectory +"\\" +name.ToString() + ".dat";
@@ -25,9 +38,6 @@ namespace Notification_PI.FileHelper
                 {
                     AESHelper cipher = new AESHelper();
                     byte[] bytes = cipher.Encrypt(jsonString);
-
-
-
                     using (BinaryWriter bwriter = new BinaryWriter(File.CreateText(path).BaseStream, Encoding.UTF8))
                     {
 
@@ -35,9 +45,6 @@ namespace Notification_PI.FileHelper
                     }
                 }
                 );
-            
-             
-            
             return true;
         }
 
@@ -47,9 +54,6 @@ namespace Notification_PI.FileHelper
             try
             {
                 string path = Environment.CurrentDirectory +"\\" +name.ToString() + ".dat";
-                
-                
-
                 using (BinaryReader breader = new BinaryReader(File.OpenText(path).BaseStream))
                 {
                     await Task.Run(
@@ -62,7 +66,6 @@ namespace Notification_PI.FileHelper
                         );
                     
                 }
-                    //result = await reader.ReadToEndAsync();
                 return result;
                 
             }
@@ -82,8 +85,26 @@ namespace Notification_PI.FileHelper
                 await Task.Run(() => { File.Delete(path); });
                 return true;
             }
-            
             return false;
         }
+
+        public async Task<string> ReadFromInstallationSystem(FileName name,Extension ext)
+        {
+            String result = null;
+            try
+            {
+                string path = Environment.CurrentDirectory +"\\" +name.ToString() + "." + ext.ToString().ToLower();
+                using (StreamReader reader = File.OpenText(path))
+                {
+                    result = await reader.ReadToEndAsync();
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
     }
 }

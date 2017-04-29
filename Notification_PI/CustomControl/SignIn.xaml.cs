@@ -32,6 +32,7 @@ namespace Notification_PI.CustomControl
         {
             User user = new User();
 
+            user.Name = Name.Text;
             user.Email = Email.Text;
             user.Password = Password.Password;
             UserHelper helper = new UserHelper();

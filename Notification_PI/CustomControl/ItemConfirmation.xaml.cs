@@ -1,4 +1,7 @@
 ﻿using MaterialDesignThemes.Wpf;
+using Models;
+using Notification_PI.FileHelper;
+using Notification_PI.ModelsHelper;
 using Notification_PI.NetHelper;
 using Notification_PI.ViewModels;
 using System;
@@ -17,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Notification_PI.FileHelper.FileHandler;
 
 namespace Notification_PI.CustomControl
 {
@@ -47,20 +51,63 @@ namespace Notification_PI.CustomControl
             toMail = toMailBox.Text.Split(new char[] { ';' }).Where(x => x!="").ToArray();
             ccMail = ccMailBox.Text.Split(new char[] { ';' }).Where(x => x != "").ToArray();
             bccMail = bccMailBox.Text.Split(new char[] { ';' }).Where(x => x != "").ToArray();
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "Notification_PI." + "MailTemplate.txt";
 
-            string resource = null;
-            var ds = assembly.GetManifestResourceNames();
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            {
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    resource = reader.ReadToEnd();
-                }
-            }
+            FileHandler handler = new FileHandler();
+            string str = await handler.ReadFromInstallationSystem(FileName.Template, Extension.HTML);
+            ItemControlViewModel itemModel =  (ItemControlViewModel)DataContext;
+
+            User requester = await getUser(itemModel.SitObject.RequesterName);
+            User tester = await getUser(itemModel.SitObject.TestersInvolved);
+
+            UserHelper helper = new UserHelper();
+            User deployer = await helper.GetUserFromSystem();
+
+            str = String.Format(str,
+                "Hi All,",
+                greetingText.Text,
+                DateTime.Parse(itemModel.SitObject.DeploymentWindow).Day + "/",
+                DateTime.Parse(itemModel.SitObject.DeploymentWindow).Month.ToString() + "/" + DateTime.Parse(itemModel.SitObject.DeploymentWindow).Year,
+                DateTime.Parse(itemModel.SitObject.DeploymentWindow).Hour.ToString() + "00",
+                (DateTime.Now.Month >= 4 && DateTime.Now.Month <= 10) ? "CEST" : "CET",
+                (DateTime.Parse(itemModel.SitObject.DeploymentWindow).Hour + 1).ToString() + "00",
+                itemModel.SitObject.Application,
+                itemModel.SitObject.Id,
+                itemModel.SitObject.Project,
+                requester.Email,
+                requester.Name,
+                deployer.Name,
+                deployer.Email,
+                tester.Name,
+                tester.Email
+                );
+            
             SMTPAsync smtpObj = new SMTPAsync();
-            bool result = await smtpObj.SendMessage(toMail,ccMail,bccMail,"","",new System.Net.NetworkCredential("rajat.sharma@maersk.com","Mar@2017"));
+            bool result = await smtpObj.SendMessage(toMail,ccMail,bccMail,"",str,new System.Net.NetworkCredential(deployer.Email,deployer.Password));
+        }
+        private async Task<User> getUser(string name)
+        {
+            FileHandler handler = new FileHandler();
+            string contactsString = await handler.ReadFromInstallationSystem(FileName.Contacts, Extension.DAT);
+            string[] namePart = name.Split(',');
+            namePart = namePart.Where(x => x != "").ToArray();
+            namePart[0] = namePart[0].Replace(" ", "");
+            namePart[1] = namePart[1].Replace(" ", "");
+            string[] Team = contactsString.Split(',');
+            Team = Team.Where(x => x.Contains(namePart[0]) && x.Contains(namePart[1])).ToArray();
+            if(Team.Length > 0)
+            {
+                Team[0] = Team[0].Replace("\r\n", "");
+                return new User()
+                {
+                    Name = Team[0].Split(';')[1],
+                    Email = Team[0].Split(';')[0]
+                };
+            }
+            return new User()
+            {
+                Name = namePart[1] + namePart[0],
+                Email = ""
+            };
         }
     }
 }

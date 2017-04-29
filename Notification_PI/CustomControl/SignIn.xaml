@@ -43,6 +43,8 @@
                         <materialDesign:PackIcon Kind="Login" />
                     </Button>
                     <StackPanel Grid.Row="1" Margin="8 24 8 0" >
+                        <TextBox x:Name="Name" materialDesign:HintAssist.Hint="Name" materialDesign:HintAssist.IsFloating="True"
+                                 Margin="0 12 0 0"/>
                         <TextBox x:Name="Email" materialDesign:HintAssist.Hint="Email" materialDesign:HintAssist.IsFloating="True"
                                  Margin="0 12 0 0"/>
                         <PasswordBox x:Name="Password" Grid.Row="1" materialDesign:HintAssist.Hint="Password" materialDesign:HintAssist.IsFloating="True"

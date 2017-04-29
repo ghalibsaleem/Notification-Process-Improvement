@@ -25,7 +25,7 @@ namespace Notification_PI.ModelsHelper
             list1 = list1.OrderByDescending(a => a.Id).ToList();
             int lastSeq = 0;
 
-            DateTime lastDate = DateTime.Now.AddDays(-5);
+            DateTime lastDate = DateTime.Now.AddDays(-50);
 
             FileHandler fHandler = new FileHandler();
             var jsonString = await fHandler.ReadFromSystem(FileHandler.FileName.Settings);
