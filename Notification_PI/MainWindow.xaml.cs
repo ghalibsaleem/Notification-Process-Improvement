@@ -85,9 +85,6 @@ namespace Notification_PI
                 if ((DataContext as MainWindowViewModel).User != null)
                 {
                     DialogHost.OpenDialogCommand.Execute(new Loading(), rootDialog);
-                    //await ((mainContentControl.Content as ItemGrid).DataContext as ItemGridViewModel)
-                    //    .FillCollection((DataContext as MainWindowViewModel).User);
-                    //DialogHost.CloseDialogCommand.Execute(null, rootDialog);
                 }
                 else
                 {

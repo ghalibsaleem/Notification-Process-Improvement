@@ -46,44 +46,70 @@ namespace Notification_PI.CustomControl
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            string[] toMail,ccMail,bccMail;
-            ItemControlViewModel model = this.DataContext as ItemControlViewModel;
-            toMail = toMailBox.Text.Split(new char[] { ';' }).Where(x => x!="").ToArray();
-            ccMail = ccMailBox.Text.Split(new char[] { ';' }).Where(x => x != "").ToArray();
-            bccMail = bccMailBox.Text.Split(new char[] { ';' }).Where(x => x != "").ToArray();
+            Loading view = new Loading();
+            try
+            {
+                string[] toMail, ccMail, bccMail;
+                ItemControlViewModel model = this.DataContext as ItemControlViewModel;
+                toMail = toMailBox.Text.Split(new char[] { ';' }).Where(x => x != "").ToArray();
+                ccMail = ccMailBox.Text.Split(new char[] { ';' }).Where(x => x != "").ToArray();
+                bccMail = bccMailBox.Text.Split(new char[] { ';' }).Where(x => x != "").ToArray();
 
-            FileHandler handler = new FileHandler();
-            string str = await handler.ReadFromInstallationSystem(FileName.Template, Extension.HTML);
-            ItemControlViewModel itemModel =  (ItemControlViewModel)DataContext;
+                FileHandler handler = new FileHandler();
+                string str = await handler.ReadFromInstallationSystem(FileName.Template, Extension.HTML);
+                ItemControlViewModel itemModel = (ItemControlViewModel)DataContext;
 
-            User requester = await getUser(itemModel.SitObject.RequesterName);
-            User tester = await getUser(itemModel.SitObject.TestersInvolved);
+                User requester = await getUser(itemModel.SitObject.RequesterName);
+                User tester = await getUser(itemModel.SitObject.TestersInvolved);
 
-            UserHelper helper = new UserHelper();
-            User deployer = await helper.GetUserFromSystem();
+                UserHelper helper = new UserHelper();
+                User deployer = await helper.GetUserFromSystem();
 
-            str = String.Format(str,
-                "Hi All,",
-                greetingText.Text,
-                DateTime.Parse(itemModel.SitObject.DeploymentWindow).Day + "/",
-                DateTime.Parse(itemModel.SitObject.DeploymentWindow).Month.ToString() + "/" + DateTime.Parse(itemModel.SitObject.DeploymentWindow).Year,
-                DateTime.Parse(itemModel.SitObject.DeploymentWindow).Hour.ToString() + "00",
-                (DateTime.Now.Month >= 4 && DateTime.Now.Month <= 10) ? "CEST" : "CET",
-                (DateTime.Parse(itemModel.SitObject.DeploymentWindow).Hour + 1).ToString() + "00",
-                itemModel.SitObject.Application,
-                itemModel.SitObject.Id,
-                itemModel.SitObject.Project,
-                requester.Email,
-                requester.Name,
-                deployer.Name,
-                deployer.Email,
-                tester.Name,
-                tester.Email
-                );
-            
-            SMTPAsync smtpObj = new SMTPAsync();
-            bool result = await smtpObj.SendMessage(toMail,ccMail,bccMail,"",str,new System.Net.NetworkCredential(deployer.Email,deployer.Password));
+                str = String.Format(str,
+                    "Hi All,",
+                    greetingText.Text,
+                    DateTime.Parse(itemModel.SitObject.DeploymentWindow).Day + "/",
+                    DateTime.Parse(itemModel.SitObject.DeploymentWindow).Month.ToString() + "/" + DateTime.Parse(itemModel.SitObject.DeploymentWindow).Year,
+                    DateTime.Parse(itemModel.SitObject.DeploymentWindow).Hour.ToString() + "00",
+                    (DateTime.Now.Month >= 4 && DateTime.Now.Month <= 10) ? "CEST" : "CET",
+                    (DateTime.Parse(itemModel.SitObject.DeploymentWindow).Hour + 1).ToString() + "00",
+                    itemModel.SitObject.Application,
+                    itemModel.SitObject.Id,
+                    itemModel.SitObject.Project,
+                    requester.Email,
+                    requester.Name,
+                    deployer.Name,
+                    deployer.Email,
+                    tester.Name,
+                    tester.Email
+                    );
+                
+
+                //await DialogHost.Show(view, "gridDialogHost", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
+                DialogHost.OpenDialogCommand.Execute(view, this);
+                SMTPAsync smtpObj = new SMTPAsync();
+                bool result = await smtpObj.SendMessage(toMail, ccMail, bccMail, "", str, new System.Net.NetworkCredential(deployer.Email, deployer.Password));
+                DialogHost.CloseDialogCommand.Execute(this, view);
+                if (result)
+                {
+                    Message msg = new Message("Mail Send Successfully");
+                    await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
+                }
+                else
+                {
+                    Message msg = new Message("Mail Send Failed");
+                    await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
+                }
+            }
+            catch (Exception ex)
+            {
+                DialogHost.CloseDialogCommand.Execute(this, view);
+                Message msg = new Message(ex.Message);
+                //DialogHost.OpenDialogCommand.Execute(msg, this);
+                await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
+            }
         }
+
         private async Task<User> getUser(string name)
         {
             FileHandler handler = new FileHandler();
@@ -108,6 +134,16 @@ namespace Notification_PI.CustomControl
                 Name = namePart[1] + namePart[0],
                 Email = ""
             };
+        }
+
+        private void gridDialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            eventArgs.Handled = true;
+        }
+
+        private void gridDialogHost_DialogOpened(object sender, DialogOpenedEventArgs eventArgs)
+        {
+            eventArgs.Handled = true;
         }
     }
 }
