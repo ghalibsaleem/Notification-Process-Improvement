@@ -74,7 +74,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="Wrap" FontWeight="Bold" Grid.Column="0" Text="Greeting Text" />
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="Wrap" FontWeight="Bold" Grid.Column="0" Text="Message" />
                             <TextBox x:Name="greetingText" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True"/>
                         </Grid>
                         <Separator BorderThickness="1" VerticalAlignment="Bottom"/>
@@ -111,14 +111,14 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <Grid Margin="5 10 5 10">
+                        <!--<Grid Margin="5 10 5 10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="Wrap" FontWeight="Bold" Grid.Column="0" Text="Signature" />
                             <TextBox x:Name="signatureText" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True"/>
-                        </Grid>
+                        </Grid>-->
                         <DockPanel Margin="5 10 5 10">
                             <Button HorizontalAlignment="Left" Click="Button_Click">Send</Button>
                             <Button HorizontalAlignment="Right" Click="Cancel_Button_Clicked">Cancel</Button>

@@ -81,7 +81,9 @@ namespace Notification_PI.CustomControl
                     deployer.Name,
                     deployer.Email,
                     tester.Name,
-                    tester.Email
+                    tester.Email,
+                    (Header == "Final Mail") ? "Completed successfully." : "Updates to follow soon.",
+                    deployer.Name
                     );
                 
 
