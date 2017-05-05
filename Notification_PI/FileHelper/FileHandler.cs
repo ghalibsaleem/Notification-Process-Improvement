@@ -101,7 +101,7 @@ namespace Notification_PI.FileHelper
             String result = null;
             try
             {
-                string path = Environment.CurrentDirectory +"\\" +name.ToString() + "." + ext.ToString().ToLower();
+                string path = Environment.CurrentDirectory +"\\data\\" +name.ToString() + "." + ext.ToString().ToLower();
                 using (StreamReader reader = File.OpenText(path))
                 {
                     result = await reader.ReadToEndAsync();
