@@ -78,7 +78,8 @@ namespace Notification_PI.CustomControl
 
                 DialogHost.OpenDialogCommand.Execute(view, this);
                 SMTPAsync smtpObj = new SMTPAsync();
-                bool result = await smtpObj.SendMessage(toMail, ccMail, bccMail, "", str, new System.Net.NetworkCredential(deployer.Email, deployer.Password));
+                string subject = itemModel.SitObject.Id + " Notification " + itemModel.SitObject.Project;
+                bool result = await smtpObj.SendMessage(toMail, ccMail, bccMail, subject, str, new System.Net.NetworkCredential(deployer.Email, deployer.Password));
                 DialogHost.CloseDialogCommand.Execute(this, view);
                 if (result)
                 {
