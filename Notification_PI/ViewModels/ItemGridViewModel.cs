@@ -1,19 +1,10 @@
-﻿using HtmlParser;
-using MaterialDesignThemes.Wpf;
+﻿using MaterialDesignThemes.Wpf;
 using Models;
 using Notification_PI.Commands;
 using Notification_PI.CustomControl;
-using Notification_PI.FileHelper;
-using Notification_PI.JSONHelper;
 using Notification_PI.ModelsHelper;
-using Notification_PI.NetHelper;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -51,8 +42,6 @@ namespace Notification_PI.ViewModels
 
         public async Task FillCollection(User user)
         {
-
-
             ItemHelper helper = new ItemHelper();
             
             ObservableCollection<SIT2_Item> temp = await helper.GetItems(user);
@@ -63,8 +52,6 @@ namespace Notification_PI.ViewModels
 
         private async void ExecuteRunDialog(object o)
         {
-            //let's set up a little MVVM, cos that's what the cool kids are doing:
-            
             var view = new ItemControl()
             {
                 DataContext = new ItemControlViewModel(o as SIT2_Item)

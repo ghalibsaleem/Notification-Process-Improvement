@@ -9,7 +9,6 @@ namespace Notification_PI.NetHelper
 {
     public class IMAPAsync : IMAP_Wrapper
     {
-
         public async Task ConnectAsync(string server,string user,string password,int port,bool useSSL)
         {
             await Task.Run(() =>
@@ -20,11 +19,7 @@ namespace Notification_PI.NetHelper
                 }
                 catch (Exception)
                 {
-
-                    
                 }
-                
-                
             });
         }
 
@@ -34,7 +29,6 @@ namespace Notification_PI.NetHelper
             {
                 if (IsConnected)
                     Disconnect();
-
             });
         }
 
@@ -44,7 +38,6 @@ namespace Notification_PI.NetHelper
             {
                 if (IsConnected)
                     LoadMessages();
-
             });
         }
 
@@ -54,7 +47,6 @@ namespace Notification_PI.NetHelper
             {
                 if (IsConnected)
                     LoadMessages(start,end);
-
             });
         }
 

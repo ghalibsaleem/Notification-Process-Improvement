@@ -6,7 +6,6 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:converters="clr-namespace:Notification_PI.Converters"
              xmlns:viewmodels="clr-namespace:Notification_PI.ViewModels"
-             xmlns:local="clr-namespace:Notification_PI.CustomControl"
              mc:Ignorable="d" 
              MaxHeight="500"
              MaxWidth="650"

@@ -5,21 +5,10 @@ using Notification_PI.ModelsHelper;
 using Notification_PI.NetHelper;
 using Notification_PI.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using static Notification_PI.FileHelper.FileHandler;
 
 namespace Notification_PI.CustomControl
@@ -87,7 +76,6 @@ namespace Notification_PI.CustomControl
                     );
                 
 
-                //await DialogHost.Show(view, "gridDialogHost", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
                 DialogHost.OpenDialogCommand.Execute(view, this);
                 SMTPAsync smtpObj = new SMTPAsync();
                 bool result = await smtpObj.SendMessage(toMail, ccMail, bccMail, "", str, new System.Net.NetworkCredential(deployer.Email, deployer.Password));
@@ -107,7 +95,6 @@ namespace Notification_PI.CustomControl
             {
                 DialogHost.CloseDialogCommand.Execute(this, view);
                 Message msg = new Message(ex.Message);
-                //DialogHost.OpenDialogCommand.Execute(msg, this);
                 await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
             }
         }
@@ -170,8 +157,6 @@ namespace Notification_PI.CustomControl
                         user.Name += ", " + tempTeam[0].Split(';')[1];
                         user.Email += "; " + tempTeam[0].Split(';')[0];
                     }
-
-
                 }
                 else
                 {

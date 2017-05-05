@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Models;
@@ -11,7 +10,6 @@ using Notification_PI.FileHelper;
 using Notification_PI.NetHelper;
 using HtmlParser;
 using D.Net.EmailInterfaces;
-using System.Globalization;
 
 namespace Notification_PI.ModelsHelper
 {
@@ -77,8 +75,6 @@ namespace Notification_PI.ModelsHelper
                 table.Id = item.Subject.Remove(0, item.Subject.IndexOf(" ID") + 3)
                 ;
                 list.Add(table);
-                
-                
             }
             
             if (d.Messages.Count > 0)
@@ -100,17 +96,11 @@ namespace Notification_PI.ModelsHelper
                     setting.LastSeq = Messages.First().SequenceNumber;
                     setting.LastDate = Messages.First().Date;
                 }
-
-
                 jsonString = jHandler.Serialize<Settings>(setting);
-
-
                 await fHandler.WriteOnSystem(jsonString, FileHandler.FileName.Settings);
             }
             
             await d.DisconnectAsync();
-
-            
             return list;
         }
 
@@ -123,8 +113,6 @@ namespace Notification_PI.ModelsHelper
                 JSONHandler jHandler = new JSONHandler();
                 return jHandler.Deserialize<List<SIT2_Item>>(jsonString);
             }
-            
-
             return new List<SIT2_Item>();
         }
 

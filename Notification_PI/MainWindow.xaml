@@ -16,7 +16,7 @@
         xmlns:local="clr-namespace:Notification_PI"
         xmlns:localCustomControl="clr-namespace:Notification_PI.CustomControl"
         mc:Ignorable="d"
-        Title="MainWindow">
+        Title="Notification PI">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -32,9 +32,6 @@
             <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                             Mode="PrimaryMid" DockPanel.Dock="Top">
                 <DockPanel>
-                    <!--<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
-                                        x:Name="MenuToggleButton" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
-
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
                         <materialDesign:PopupBox Padding="0 0 0 0"  PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
                             <materialDesign:PopupBox.ToggleContent>
@@ -62,10 +59,6 @@
                                         <TextBlock Text="{Binding  Path=Email}" TextWrapping="Wrap" VerticalAlignment="Center"/>
                                     </StackPanel>
                                     <DockPanel HorizontalAlignment="Center" Grid.Row="2" Margin="8">
-                                        <!--<Button Width="30" Padding="2 2 2 2"
-                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
-                            <materialDesign:PackIcon Kind="Login" />
-                        </Button>-->
                                     </DockPanel>
                                 </Grid>
                             </WrapPanel>
