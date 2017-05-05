@@ -207,8 +207,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Mail.ico" />
-    <Resource Include="mail icon.ico" />
-    <Resource Include="Dakirby309-Windows-8-Metro-Other-Mail-Metro.ico" />
     <Content Include="Data\Template.html" />
   </ItemGroup>
   <ItemGroup>
