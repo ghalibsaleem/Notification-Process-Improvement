@@ -29,7 +29,12 @@ namespace Notification_PI.FileHelper
 
         public async Task<bool> WriteOnSystem(string jsonString,FileName name)
         {
-            string path = Environment.CurrentDirectory +"\\" +name.ToString() + ".dat";
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\NotificationPI";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            path += "\\" + name.ToString() + ".dat";
 
             await Task.Run(
                 () =>
@@ -51,7 +56,12 @@ namespace Notification_PI.FileHelper
             String result = null;
             try
             {
-                string path = Environment.CurrentDirectory +"\\" +name.ToString() + ".dat";
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\NotificationPI";
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                path += "\\" + name.ToString() + ".dat";
                 using (BinaryReader breader = new BinaryReader(File.OpenText(path).BaseStream))
                 {
                     await Task.Run(
