@@ -73,7 +73,7 @@
                         
                         <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
                             <StackPanel>
-                                
+                                <Button Content="Refresh" Click="MenuPopupButton_OnClick"/>
                                 <Button Content="Help" Click="MenuPopupButton_OnClick"/>
                                 <Button Content="About" Click="MenuPopupButton_OnClick"/>
                                 <Separator/>

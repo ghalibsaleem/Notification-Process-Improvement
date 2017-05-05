@@ -45,9 +45,26 @@ namespace Notification_PI
 
         }
 
-        private void MenuPopupButton_OnClick(object sender, RoutedEventArgs e)
+        private async void MenuPopupButton_OnClick(object sender, RoutedEventArgs e)
         {
-
+            if((sender as Button).Content as string == "Refresh")
+            {
+                DialogHost.OpenDialogCommand.Execute(new Loading(), rootDialog);
+            }
+            if ((sender as Button).Content as string == "Help")
+            {
+                Message msg = new Message("Contact SIT2 Team GG7");
+                await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
+            }
+            if ((sender as Button).Content as string == "About")
+            {
+                Message msg = new Message("Notification Process Improvement for SIT2 Evironment");
+                await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
+            }
+            if ((sender as Button).Content as string == "Exit")
+            {
+                App.Current.Shutdown();
+            }
         }
 
         private async void RootDialogOpened(object sender, MaterialDesignThemes.Wpf.DialogOpenedEventArgs eventArgs)
@@ -107,6 +124,16 @@ namespace Notification_PI
             await handler.DeleteFile(FileHandler.FileName.Settings);
             ((mainContentControl.Content as ItemGrid).DataContext as ItemGridViewModel).Sit_ItemsCollection = new ObservableCollection<SIT2_Item>();
             DialogHost.OpenDialogCommand.Execute(new Loading(), rootDialog);
+        }
+
+        private void gridDialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            eventArgs.Handled = true;
+        }
+
+        private void gridDialogHost_DialogOpened(object sender, DialogOpenedEventArgs eventArgs)
+        {
+            eventArgs.Handled = true;
         }
     }
 }
