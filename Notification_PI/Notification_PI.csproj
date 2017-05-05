@@ -49,7 +49,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>mail icon.ico</ApplicationIcon>
+    <ApplicationIcon>Mail.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -206,6 +206,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Mail.ico" />
     <Resource Include="mail icon.ico" />
     <Resource Include="Dakirby309-Windows-8-Metro-Other-Mail-Metro.ico" />
     <Content Include="Data\Template.html" />

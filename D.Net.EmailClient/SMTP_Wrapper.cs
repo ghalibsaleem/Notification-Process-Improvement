@@ -102,12 +102,11 @@ namespace D.Net.EmailClient
                 SMTP_Client.QuickSendSmartHost("webmail.maersk.net",587, false, "rajat.sharma@maersk.com","Mar@2017",  mail);
                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 
             }
-            //Client.QuickSend(wr.GetMail());
             return false;
         }
 

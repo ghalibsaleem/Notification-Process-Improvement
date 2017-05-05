@@ -43,7 +43,7 @@
                         <materialDesign:PackIcon Kind="Login" />
                     </Button>
                     <StackPanel Grid.Row="1" Margin="8 24 8 0" >
-                        <TextBox x:Name="Name" materialDesign:HintAssist.Hint="Name" materialDesign:HintAssist.IsFloating="True"
+                        <TextBox x:Name="NameText" materialDesign:HintAssist.Hint="Name" materialDesign:HintAssist.IsFloating="True"
                                  Margin="0 12 0 0"/>
                         <TextBox x:Name="Email" materialDesign:HintAssist.Hint="Email" materialDesign:HintAssist.IsFloating="True"
                                  Margin="0 12 0 0"/>
@@ -51,10 +51,6 @@
                                  Margin="0 12 0 0"/>
                     </StackPanel>
                     <DockPanel HorizontalAlignment="Center" Grid.Row="2" Margin="8">
-                        <!--<Button Width="30" Padding="2 2 2 2"
-                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
-                            <materialDesign:PackIcon Kind="Login" />
-                        </Button>-->
                     </DockPanel>
                 </Grid>
             </materialDesign:Card>

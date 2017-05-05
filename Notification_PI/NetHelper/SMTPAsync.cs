@@ -46,7 +46,7 @@ namespace Notification_PI.NetHelper
                     {
                         smtpClient.Send(mailMessage);
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                        return false;
                     }
