@@ -114,6 +114,8 @@ namespace Notification_PI.CustomControl
 
         private async Task<User> getUser(string name)
         {
+            if (name.Contains(";"))
+                return await getMultipleUsers(name);
             FileHandler handler = new FileHandler();
             string contactsString = await handler.ReadFromInstallationSystem(FileName.Contacts, Extension.DAT);
             string[] namePart = name.Split(',');
@@ -133,9 +135,53 @@ namespace Notification_PI.CustomControl
             }
             return new User()
             {
-                Name = namePart[1] + namePart[0],
+                Name = namePart[1] + " " + namePart[0],
                 Email = ""
             };
+        }
+
+        private async Task<User> getMultipleUsers(string name)
+        {
+            FileHandler handler = new FileHandler();
+            string contactsString = await handler.ReadFromInstallationSystem(FileName.Contacts, Extension.DAT);
+            string[] Team = contactsString.Split(',');
+            string[] names = name.Split(';');
+            User user = new User() {
+                Name = "",
+                Email = ""
+            };
+            foreach (var item in names)
+            {
+                string[] namePart = item.Split(',');
+                namePart = namePart.Where(x => x != "").ToArray();
+                namePart[0] = namePart[0].Replace(" ", "");
+                namePart[1] = namePart[1].Replace(" ", "");
+                string[] tempTeam = Team.Where(x => x.Contains(namePart[0]) && x.Contains(namePart[1])).ToArray();
+                if (tempTeam.Length > 0)
+                {
+                    tempTeam[0] = tempTeam[0].Replace("\r\n", "");
+                    if(user.Name == "")
+                    {
+                        user.Name = tempTeam[0].Split(';')[1];
+                        user.Email = tempTeam[0].Split(';')[0];
+                    }
+                    else
+                    {
+                        user.Name += ", " + tempTeam[0].Split(';')[1];
+                        user.Email += "; " + tempTeam[0].Split(';')[0];
+                    }
+
+
+                }
+                else
+                {
+                    if (user.Name == "")
+                        user.Name += namePart[1] + " " + namePart[0];
+                    else
+                        user.Name += ", " + namePart[1] + " " + namePart[0];
+                }
+            }
+            return user;
         }
 
         private void gridDialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
