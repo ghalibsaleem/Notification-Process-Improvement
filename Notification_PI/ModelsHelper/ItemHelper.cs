@@ -60,22 +60,27 @@ namespace Notification_PI.ModelsHelper
             List<IEmail> Messages = d.Messages
                 .Where(x => x.Subject.Contains("Alert Notification PI - Item ID") && x.From.Contains("noreply@maersk.com"))
                 .OrderByDescending(x => x.Date).ToList();
-            foreach (var item in Messages)
+            await Task.Run(() =>
             {
-                
-                item.LoadInfos();
-                Parser p = new Parser();
-                if(item.TextBody == null)
+                foreach (var item in Messages)
                 {
-                    continue;
+
+                    item.LoadInfos();
+                    Parser p = new Parser();
+                    if (item.TextBody == null)
+                    {
+                        continue;
+                    }
+                    SIT2_Item table = p.ParseHtml(item.TextBody);
+                    if (table == null)
+                        continue;
+                    table.Id = item.Subject.Remove(0, item.Subject.IndexOf(" ID") + 3)
+                    ;
+                    list.Add(table);
                 }
-                SIT2_Item table = p.ParseHtml(item.TextBody);
-                if (table == null)
-                    continue;
-                table.Id = item.Subject.Remove(0, item.Subject.IndexOf(" ID") + 3)
-                ;
-                list.Add(table);
             }
+            );
+            
             
             if (d.Messages.Count > 0)
             {
