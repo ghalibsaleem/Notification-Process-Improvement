@@ -17,8 +17,6 @@ namespace Notification_PI.ModelsHelper
     {
         public async Task<ObservableCollection<SIT2_Item>> GetItems(User user)
         {
-
-            
             List<SIT2_Item> list1 = await GetItemsFromSystem();
             list1 = list1.OrderByDescending(a => a.Id).ToList();
             int lastSeq = 0;
@@ -90,7 +88,6 @@ namespace Notification_PI.ModelsHelper
                 var jsonString = await fHandler.ReadFromSystem(FileHandler.FileName.Settings);
                 if (jsonString != null)
                 {
-
                     setting = jHandler.Deserialize<Settings>(jsonString);
                     setting.LastSeq = Messages.First().SequenceNumber;
                     setting.LastDate = Messages.First().Date;

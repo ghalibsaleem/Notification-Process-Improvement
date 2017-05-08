@@ -21,8 +21,34 @@ namespace Notification_PI.CustomControl
         public ItemConfirmation()
         {
             InitializeComponent();
+            
         }
 
+
+        public async override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            if (Header == "Final Mail")
+            {
+                greetingText.Text = "Deployment completed  for change id " + ((ItemControlViewModel)DataContext).SitObject.Id + ". Please proceed with smoke testing and confirm status once done.";
+            }
+            else
+            {
+                greetingText.Text = "Please find below the notification for Change ID-" + ((ItemControlViewModel)DataContext).SitObject.Id + ".";
+            }
+            toMailBox.Text = "XDSIT2ChangeConflictForum@maersk.com;";
+            User requester = await getUser(((ItemControlViewModel)DataContext).SitObject.RequesterName);
+            User tester = await getUser(((ItemControlViewModel)DataContext).SitObject.TestersInvolved);
+            ccMailBox.Text = "XDSIT2ReleaseDeployment@MAERSK.COM;";
+            if (!tester.Email.Contains(requester.Email))
+            {
+                ccMailBox.Text += requester.Email + ((requester.Email != "") ? ";" : "");
+            }
+            ccMailBox.Text += tester.Email
+                    + ((tester.Email != "") ? ";" : "");
+
+            
+        }
         public string Header
         {
             get { return groupBox.Header.ToString(); }
@@ -106,7 +132,13 @@ namespace Notification_PI.CustomControl
                 return await getMultipleUsers(name);
             FileHandler handler = new FileHandler();
             string contactsString = await handler.ReadFromInstallationSystem(FileName.Contacts, Extension.DAT);
-            string[] namePart = name.Split(',');
+            string[] namePart;
+            if (!name.Contains(','))
+            {
+                namePart = name.Split(' ');
+            }
+            else
+                namePart = name.Split(',');
             namePart = namePart.Where(x => x != "").ToArray();
             namePart[0] = namePart[0].Replace(" ", "");
             namePart[1] = namePart[1].Replace(" ", "");
@@ -140,7 +172,13 @@ namespace Notification_PI.CustomControl
             };
             foreach (var item in names)
             {
-                string[] namePart = item.Split(',');
+                string[] namePart;
+                if (!name.Contains(','))
+                {
+                    namePart = name.Split(' ');
+                }
+                else
+                    namePart = name.Split(',');
                 namePart = namePart.Where(x => x != "").ToArray();
                 namePart[0] = namePart[0].Replace(" ", "");
                 namePart[1] = namePart[1].Replace(" ", "");
