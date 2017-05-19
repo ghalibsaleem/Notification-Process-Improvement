@@ -50,7 +50,7 @@ namespace Notification_PI.ModelsHelper
         {
             List<SIT2_Item> list = new List<SIT2_Item>();
             IMAPAsync d = new IMAPAsync();
-            await d.ConnectAsync("webmail.maersk.net", user.Email, user.Password, 993, true);
+            await d.ConnectAsync("40.103.6.22", user.Email, user.Password, 993, true);
             await d.SetCurrentFolderAsync("Inbox");
             await d.LoadMessagesWithDateFilterAsync(lastDate);
 
