@@ -87,7 +87,7 @@ namespace Notification_PI.FileHelper
 
         public async Task<bool> DeleteFile(FileName name)
         {
-            string path = Environment.CurrentDirectory + name.ToString() + ".dat";
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\NotificationPI\\" + name.ToString() + ".dat";
             if (File.Exists(path))
             {
                 await Task.Run(() => { File.Delete(path); });

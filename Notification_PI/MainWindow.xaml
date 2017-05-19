@@ -80,13 +80,9 @@
                 </DockPanel>
             </materialDesign:ColorZone>
             <Grid>
-                <!--<materialDesign:Card Padding="32" Margin="16">
-                        <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}">My First Material Design App</TextBlock>
-                    </materialDesign:Card>-->
                 <ScrollViewer Grid.Row="1" 
-                                  HorizontalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.HorizontalScrollBarVisibilityRequirement}"
-                                  VerticalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.VerticalScrollBarVisibilityRequirement}" 
-                                  Padding="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.MarginRequirement}">
+                                  HorizontalScrollBarVisibility="Auto"
+                                  Padding="{Binding ElementName=mainContentControl, Path=SelectedItem.MarginRequirement}">
                     <ContentControl x:Name="mainContentControl"></ContentControl>
                 </ScrollViewer>
 

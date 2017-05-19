@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Notification_PI.NetHelper
@@ -42,6 +44,11 @@ namespace Notification_PI.NetHelper
                     smtpClient.EnableSsl = true;
                     smtpClient.UseDefaultCredentials = false;
                     smtpClient.Credentials = credentials;
+                    ServicePointManager.ServerCertificateValidationCallback =
+                    delegate (object s, X509Certificate certificate,X509Chain chain, SslPolicyErrors sslPolicyErrors)
+                            {
+                                return true;
+                            };
                     try
                     {
                         smtpClient.Send(mailMessage);

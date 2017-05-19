@@ -22,7 +22,7 @@
             </DockPanel>
         </materialDesign:DialogHost.DialogContent>
         <StackPanel Margin="5 5 5 5" x:Name="stackDialog">
-            <DataGrid Margin="0 8 0 0" ItemsSource="{Binding Sit_ItemsCollection}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+            <DataGrid Margin="0 8 0 0" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Sit_ItemsCollection}" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
                       materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
 
                 <DataGrid.Columns>
