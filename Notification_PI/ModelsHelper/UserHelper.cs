@@ -23,7 +23,7 @@ namespace Notification_PI.ModelsHelper
         public async Task<bool> CheckUser(User user)
         {
             IMAPAsync imap = new IMAPAsync();
-            await imap.ConnectAsync("webmail.maersk.net", user.Email, user.Password, 993, true);
+            await imap.ConnectAsync("40.103.6.22", user.Email, user.Password, 993, true);
             return imap.IsConnected;
         }
 
