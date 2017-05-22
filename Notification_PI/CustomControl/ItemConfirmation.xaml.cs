@@ -121,7 +121,7 @@ namespace Notification_PI.CustomControl
             catch (Exception ex)
             {
                 DialogHost.CloseDialogCommand.Execute(this, view);
-                Message msg = new Message(ex.Message);
+                Message msg = new Message(ex.ToString());
                 await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
             }
         }
