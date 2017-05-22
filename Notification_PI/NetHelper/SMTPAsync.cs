@@ -56,7 +56,7 @@ namespace Notification_PI.NetHelper
                     }
                     catch (Exception ex)
                     {
-                        throw ex;
+                        throw ex.InnerException;
                     }
                         return true;
                 }
