@@ -4,6 +4,7 @@ using Notification_PI.CustomControl;
 using Notification_PI.FileHelper;
 using Notification_PI.ModelsHelper;
 using Notification_PI.ViewModels;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,89 +28,123 @@ namespace Notification_PI
             
             grid.DataContext = itemModel;
             mainContentControl.Content = grid;
-            
-
         }
 
         private async void MenuPopupButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if((sender as Button).Content as string == "Refresh")
+            try
             {
-                DialogHost.OpenDialogCommand.Execute(new Loading(), rootDialog);
+                if ((sender as Button).Content as string == "Refresh")
+                {
+                    DialogHost.OpenDialogCommand.Execute(new Loading(), rootDialog);
+                }
+                if ((sender as Button).Content as string == "Help")
+                {
+                    Message msg = new Message("Contact SIT2 Team GG7");
+                    await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
+                }
+                if ((sender as Button).Content as string == "About")
+                {
+                    Message msg = new Message("Notification Process Improvement for SIT2 Evironment");
+                    await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
+                }
+                if ((sender as Button).Content as string == "Exit")
+                {
+                    App.Current.Shutdown();
+                }
             }
-            if ((sender as Button).Content as string == "Help")
+            catch (Exception ex)
             {
-                Message msg = new Message("Contact SIT2 Team GG7");
+                if (DialogHost.CloseDialogCommand.CanExecute(this, null))
+                    DialogHost.CloseDialogCommand.Execute(this, null);
+                Message msg = new Message(ex.ToString());
                 await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
-            }
-            if ((sender as Button).Content as string == "About")
-            {
-                Message msg = new Message("Notification Process Improvement for SIT2 Evironment");
-                await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
-            }
-            if ((sender as Button).Content as string == "Exit")
-            {
-                App.Current.Shutdown();
             }
         }
 
         private async void RootDialogOpened(object sender, MaterialDesignThemes.Wpf.DialogOpenedEventArgs eventArgs)
         {
-            DialogHost host = sender as DialogHost;
-            if(host.DialogContent.GetType() == typeof(Loading)){
-                UserHelper helper = new UserHelper();
-                User user = await helper.GetUserFromSystem();
-
-                if (user != null)
+            try
+            {
+                DialogHost host = sender as DialogHost;
+                if (host.DialogContent.GetType() == typeof(Loading))
                 {
-                    bool connected = await helper.CheckUser(user);
-                    if (connected)
+                    UserHelper helper = new UserHelper();
+                    User user = await helper.GetUserFromSystem();
+
+                    if (user != null)
                     {
-                        (DataContext as MainWindowViewModel).User = user;
-                        await ((mainContentControl.Content as ItemGrid).DataContext as ItemGridViewModel).FillCollection(user);
-                        DialogHost.CloseDialogCommand.Execute(null, rootDialog);
+                        bool connected = await helper.CheckUser(user);
+                        if (connected)
+                        {
+                            (DataContext as MainWindowViewModel).User = user;
+                            await ((mainContentControl.Content as ItemGrid).DataContext as ItemGridViewModel).FillCollection(user);
+                            DialogHost.CloseDialogCommand.Execute(null, rootDialog);
+                        }
+                        else
+                        {
+                            DialogHost.OpenDialogCommand.Execute(new SignIn(), rootDialog);
+                        }
                     }
                     else
-                    {
-                       DialogHost.OpenDialogCommand.Execute(new SignIn(), rootDialog);
-                    }
+                        DialogHost.OpenDialogCommand.Execute(new SignIn(), rootDialog);
                 }
-                else
-                    DialogHost.OpenDialogCommand.Execute(new SignIn(), rootDialog);
+            }
+            catch (Exception ex)
+            {
+                if(DialogHost.CloseDialogCommand.CanExecute(this,null))
+                    DialogHost.CloseDialogCommand.Execute(this, null);
+                Message msg = new Message(ex.ToString());
+                await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
             }
         }
 
         private async void RootDialogClosed(object sender, DialogClosingEventArgs eventArgs)
         {
-            DialogHost host = sender as DialogHost;
-            if (host.DialogContent.GetType() == typeof(SignIn))
+            try
             {
-                (DataContext as MainWindowViewModel).User = await (new UserHelper()).GetUserFromSystem();
-                if ((DataContext as MainWindowViewModel).User != null)
+                DialogHost host = sender as DialogHost;
+                if (host.DialogContent.GetType() == typeof(SignIn))
                 {
-                    DialogHost.OpenDialogCommand.Execute(new Loading(), rootDialog);
+                    (DataContext as MainWindowViewModel).User = await (new UserHelper()).GetUserFromSystem();
+                    if ((DataContext as MainWindowViewModel).User != null)
+                    {
+                        DialogHost.OpenDialogCommand.Execute(new Loading(), rootDialog);
+                    }
+                    else
+                    {
+                        DialogHost.OpenDialogCommand.Execute(host.DialogContent, rootDialog);
+                    }
                 }
-                else
-                {
-                    DialogHost.OpenDialogCommand.Execute(host.DialogContent, rootDialog);
-                }
-                    
-                
-                
-                        
-               
+            }
+            catch (Exception ex)
+            {
+                if (DialogHost.CloseDialogCommand.CanExecute(this, null))
+                    DialogHost.CloseDialogCommand.Execute(this, null);
+                Message msg = new Message(ex.ToString());
+                await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
             }
         }
 
         private async void SignOut_Clicked(object sender, RoutedEventArgs e)
         {
-            (DataContext as MainWindowViewModel).User = null;
-            FileHandler handler = new FileHandler();
-            await handler.DeleteFile(FileHandler.FileName.SitItem);
-            await handler.DeleteFile(FileHandler.FileName.UserDetails);
-            await handler.DeleteFile(FileHandler.FileName.Settings);
-            ((mainContentControl.Content as ItemGrid).DataContext as ItemGridViewModel).Sit_ItemsCollection = new ObservableCollection<SIT2_Item>();
-            DialogHost.OpenDialogCommand.Execute(new Loading(), rootDialog);
+            try
+            {
+                (DataContext as MainWindowViewModel).User = null;
+                FileHandler handler = new FileHandler();
+                await handler.DeleteFile(FileHandler.FileName.SitItem);
+                await handler.DeleteFile(FileHandler.FileName.UserDetails);
+                await handler.DeleteFile(FileHandler.FileName.Settings);
+                ((mainContentControl.Content as ItemGrid).DataContext as ItemGridViewModel).Sit_ItemsCollection = new ObservableCollection<SIT2_Item>();
+                DialogHost.OpenDialogCommand.Execute(new Loading(), rootDialog);
+            }
+            catch (Exception ex)
+            {
+                if (DialogHost.CloseDialogCommand.CanExecute(this, null))
+                    DialogHost.CloseDialogCommand.Execute(this, null);
+                Message msg = new Message(ex.ToString());
+                await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
+            }
         }
 
         private void gridDialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
