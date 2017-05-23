@@ -42,7 +42,7 @@ namespace Notification_PI.NetHelper
                     
                     smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                     
-                    smtpClient.EnableSsl = false;
+                    smtpClient.EnableSsl = true;
                     smtpClient.UseDefaultCredentials = false;
                     smtpClient.Credentials = credentials;
                     ServicePointManager.ServerCertificateValidationCallback =
