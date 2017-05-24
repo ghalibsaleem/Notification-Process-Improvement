@@ -4157,10 +4157,24 @@ namespace LumiSoft.Net.SMTP.Client
             }
 
             using(SMTP_Client smtp = new SMTP_Client()){
+                
+                smtp.ValidateCertificateCallback = delegate(object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+                {
+                    return true;
+                };
+                
                 smtp.Connect(host,port,ssl);
                 smtp.EhloHelo(localHost != null ? localHost : Dns.GetHostName());
-                if (!string.IsNullOrEmpty(userName)){
-                    smtp.Auth(smtp.AuthGetStrongestMethod(userName,password));
+                smtp.StartTLS(delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+                {
+                    return true;
+                });
+                smtp.EhloHelo(localHost != null ? localHost : Dns.GetHostName());
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    AUTH_SASL_Client asd = new AUTH_SASL_Client_Login(userName, password);
+                    smtp.Auth(asd);
+                    
                 }
                 smtp.MailFrom(from,-1);
                 foreach(string t in to){
