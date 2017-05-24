@@ -53,6 +53,16 @@ namespace Notification_PI.ModelsHelper
             return new ObservableCollection<SIT2_Item>();
         }
 
+
+        private void gridDialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            eventArgs.Handled = true;
+        }
+
+        private void gridDialogHost_DialogOpened(object sender, DialogOpenedEventArgs eventArgs)
+        {
+            eventArgs.Handled = true;
+        }
         
         public async Task<List<SIT2_Item>> GetItemsFromMail(DateTime lastDate,User user)
         {
