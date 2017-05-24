@@ -110,19 +110,19 @@ namespace Notification_PI.CustomControl
                 if (result)
                 {
                     Message msg = new Message("Mail Send Successfully");
-                    await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
+                    await DialogHost.Show(msg, "RootDialog", GridDialogHost_DialogOpened, GridDialogHost_DialogClosing);
                 }
                 else
                 {
                     Message msg = new Message("Mail Send Failed");
-                    await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
+                    await DialogHost.Show(msg, "RootDialog", GridDialogHost_DialogOpened, GridDialogHost_DialogClosing);
                 }
             }
             catch (Exception ex)
             {
                 DialogHost.CloseDialogCommand.Execute(this, view);
                 Message msg = new Message(ex.ToString());
-                await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
+                await DialogHost.Show(msg, "RootDialog", GridDialogHost_DialogOpened, GridDialogHost_DialogClosing);
             }
         }
 
@@ -225,12 +225,12 @@ namespace Notification_PI.CustomControl
             return user;
         }
 
-        private void gridDialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        private void GridDialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
         {
             eventArgs.Handled = true;
         }
 
-        private void gridDialogHost_DialogOpened(object sender, DialogOpenedEventArgs eventArgs)
+        private void GridDialogHost_DialogOpened(object sender, DialogOpenedEventArgs eventArgs)
         {
             eventArgs.Handled = true;
         }
