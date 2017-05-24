@@ -30,8 +30,8 @@ namespace Notification_PI
                 grid.DataContext = itemModel;
                 mainContentControl.Content = grid;
             }catch(Exception ex){
-                if (DialogHost.CloseDialogCommand.CanExecute(this, rootDialog))
-                    DialogHost.CloseDialogCommand.Execute(this, null);
+               
+                DialogHost.CloseDialogCommand.Execute(this, null);
                 Message msg = new Message(ex.ToString());
                 DialogHost.OpenDialogCommand.Execute(msg, rootDialog);
                // await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
@@ -64,8 +64,8 @@ namespace Notification_PI
             }
             catch (Exception ex)
             {
-                if (DialogHost.CloseDialogCommand.CanExecute(this, null))
-                    DialogHost.CloseDialogCommand.Execute(this, null);
+                
+                DialogHost.CloseDialogCommand.Execute(this, null);
                 Message msg = new Message(ex.ToString());
                 await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
             }
@@ -101,8 +101,8 @@ namespace Notification_PI
             }
             catch (Exception ex)
             {
-                if(DialogHost.CloseDialogCommand.CanExecute(this,null))
-                    DialogHost.CloseDialogCommand.Execute(this, null);
+                
+                DialogHost.CloseDialogCommand.Execute(this, null);
                 Message msg = new Message(ex.ToString());
                 await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
             }
@@ -128,8 +128,8 @@ namespace Notification_PI
             }
             catch (Exception ex)
             {
-                if (DialogHost.CloseDialogCommand.CanExecute(this, null))
-                    DialogHost.CloseDialogCommand.Execute(this, null);
+                
+                DialogHost.CloseDialogCommand.Execute(this, null);
                 Message msg = new Message(ex.ToString());
                 await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
             }
@@ -149,8 +149,8 @@ namespace Notification_PI
             }
             catch (Exception ex)
             {
-                if (DialogHost.CloseDialogCommand.CanExecute(this, null))
-                    DialogHost.CloseDialogCommand.Execute(this, null);
+                
+                DialogHost.CloseDialogCommand.Execute(this, null);
                 Message msg = new Message(ex.ToString());
                 await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
             }
