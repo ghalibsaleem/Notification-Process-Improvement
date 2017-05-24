@@ -20,7 +20,6 @@ namespace Notification_PI.ModelsHelper
         public async Task<ObservableCollection<SIT2_Item>> GetItems(User user)
         {
             try{
-                throw new Exception("Test");
                 List<SIT2_Item> list1 = await GetItemsFromSystem();
                 list1 = list1.OrderByDescending(a => a.Id).ToList();
                 int lastSeq = 0;
