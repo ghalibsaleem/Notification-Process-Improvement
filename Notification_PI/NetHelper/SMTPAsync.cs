@@ -36,7 +36,7 @@ namespace Notification_PI.NetHelper
                     {
                         mailMessage.To.Add(item);
                     }
-                    SmtpClient smtpClient = new SmtpClient("webmail.maersk.com", 587);
+                    SmtpClient smtpClient = new SmtpClient("webmail.maersk.net", 587);
                     mailMessage.IsBodyHtml = true;
                     
                     
