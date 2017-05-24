@@ -19,15 +19,23 @@ namespace Notification_PI
         public  MainWindow()
         {
             InitializeComponent();
-            DialogHost.OpenDialogCommand.Execute(new Loading(), rootDialog);
-            MainWindowViewModel mainModel = new MainWindowViewModel();
-            DataContext = mainModel;
+            try{
+                DialogHost.OpenDialogCommand.Execute(new Loading(), rootDialog);
+                MainWindowViewModel mainModel = new MainWindowViewModel();
+                DataContext = mainModel;
+                
+                ItemGrid grid = new ItemGrid();
+                ItemGridViewModel itemModel = new ItemGridViewModel();
+                
+                grid.DataContext = itemModel;
+                mainContentControl.Content = grid;
+            }catch(Exception ex){
+                if (DialogHost.CloseDialogCommand.CanExecute(this, null))
+                    DialogHost.CloseDialogCommand.Execute(this, null);
+                Message msg = new Message(ex.ToString());
+                await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
+            }
             
-            ItemGrid grid = new ItemGrid();
-            ItemGridViewModel itemModel = new ItemGridViewModel();
-            
-            grid.DataContext = itemModel;
-            mainContentControl.Content = grid;
         }
 
         private async void MenuPopupButton_OnClick(object sender, RoutedEventArgs e)
