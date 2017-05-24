@@ -40,7 +40,20 @@ namespace Notification_PI.ModelsHelper
                 list2 = list2.Concat(list1).ToList();
                 list2 = list2.GroupBy(x => x.Id).Select(x => x.First()).ToList();
 
+                list2 = list2.Where(x =>
+                {
+                    DateTime date;
+                    if(DateTime.TryParse(x.DeploymentWindow,out date))
+                    {
+                        if (date.Date >= DateTime.Now.Date)
+                            return true;
+                        else
+                            return false;
+                    }
+                    return false;
+                }).ToList();
 
+                
                 await WriteItemToSystem(list2);
                 return new ObservableCollection<SIT2_Item>(list2);
             }catch(Exception ex){
