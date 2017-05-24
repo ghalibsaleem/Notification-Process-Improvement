@@ -130,8 +130,7 @@ namespace Notification_PI.CustomControl
         {
             if (name.Contains(";"))
                 return await getMultipleUsers(name);
-            FileHandler handler = new FileHandler();
-            string contactsString = await handler.ReadFromInstallationSystem(FileName.Contacts, Extension.DAT);
+
             string[] namePart;
             if (!name.Contains(','))
             {
@@ -141,21 +140,32 @@ namespace Notification_PI.CustomControl
                 namePart = name.Split(',');
             namePart = namePart.Where(x => x != "").ToArray();
             namePart[0] = namePart[0].Replace(" ", "");
-            namePart[1] = namePart[1].Replace(" ", "");
-            string[] Team = contactsString.Split(',');
-            Team = Team.Where(x => x.Contains(namePart[0]) && x.Contains(namePart[1])).ToArray();
-            if(Team.Length > 0)
+            if(namePart.Length > 1)
+                namePart[1] = namePart[1].Replace(" ", "");
+
+            try
             {
-                Team[0] = Team[0].Replace("\r\n", "");
-                return new User()
+                FileHandler handler = new FileHandler();
+                string contactsString = await handler.ReadFromInstallationSystem(FileName.Contacts, Extension.DAT);
+
+                string[] Team = contactsString.Split(',');
+                Team = Team.Where(x => x.Contains(namePart[0]) && x.Contains(namePart[1])).ToArray();
+                if (Team.Length > 0)
                 {
-                    Name = Team[0].Split(';')[1],
-                    Email = Team[0].Split(';')[0]
-                };
+                    Team[0] = Team[0].Replace("\r\n", "");
+                    return new User()
+                    {
+                        Name = Team[0].Split(';')[1],
+                        Email = Team[0].Split(';')[0]
+                    };
+                }
+            }
+            catch (Exception)
+            {
             }
             return new User()
             {
-                Name = namePart[1] + " " + namePart[0],
+                Name = (namePart.Length > 1 ? namePart[1] + " ":"") + namePart[0],
                 Email = ""
             };
         }
@@ -164,12 +174,17 @@ namespace Notification_PI.CustomControl
         {
             FileHandler handler = new FileHandler();
             string contactsString = await handler.ReadFromInstallationSystem(FileName.Contacts, Extension.DAT);
-            string[] Team = contactsString.Split(',');
-            string[] names = name.Split(';');
-            User user = new User() {
+
+            User user = new User()
+            {
                 Name = "",
                 Email = ""
             };
+            if (contactsString == null || contactsString == "")
+                return user;
+            string[] Team = contactsString.Split(',');
+            string[] names = name.Split(';');
+            
             foreach (var item in names)
             {
                 string[] namePart;
@@ -181,7 +196,9 @@ namespace Notification_PI.CustomControl
                     namePart = name.Split(',');
                 namePart = namePart.Where(x => x != "").ToArray();
                 namePart[0] = namePart[0].Replace(" ", "");
-                namePart[1] = namePart[1].Replace(" ", "");
+                if (namePart.Length > 1)
+                    namePart[1] = namePart[1].Replace(" ", "");
+
                 string[] tempTeam = Team.Where(x => x.Contains(namePart[0]) && x.Contains(namePart[1])).ToArray();
                 if (tempTeam.Length > 0)
                 {
@@ -200,9 +217,9 @@ namespace Notification_PI.CustomControl
                 else
                 {
                     if (user.Name == "")
-                        user.Name += namePart[1] + " " + namePart[0];
+                        user.Name += (namePart.Length > 1 ? namePart[1] + " " : "") + namePart[0];
                     else
-                        user.Name += ", " + namePart[1] + " " + namePart[0];
+                        user.Name += ", " + (namePart.Length > 1 ? namePart[1] + " " : "") + namePart[0];
                 }
             }
             return user;
