@@ -17,32 +17,39 @@ namespace Notification_PI.ModelsHelper
     {
         public async Task<ObservableCollection<SIT2_Item>> GetItems(User user)
         {
-            List<SIT2_Item> list1 = await GetItemsFromSystem();
-            list1 = list1.OrderByDescending(a => a.Id).ToList();
-            int lastSeq = 0;
+            try{
+                List<SIT2_Item> list1 = await GetItemsFromSystem();
+                list1 = list1.OrderByDescending(a => a.Id).ToList();
+                int lastSeq = 0;
 
-            DateTime lastDate = DateTime.Now.AddDays(-50);
+                DateTime lastDate = DateTime.Now.AddDays(-50);
 
-            FileHandler fHandler = new FileHandler();
-            var jsonString = await fHandler.ReadFromSystem(FileHandler.FileName.Settings);
-            if (jsonString != null)
-            {
-                JSONHandler jHandler = new JSONHandler();
-                Settings setting =  jHandler.Deserialize<Settings>(jsonString);
-                lastSeq = setting.LastSeq;
-                lastDate = setting.LastDate;
+                FileHandler fHandler = new FileHandler();
+                var jsonString = await fHandler.ReadFromSystem(FileHandler.FileName.Settings);
+                if (jsonString != null)
+                {
+                    JSONHandler jHandler = new JSONHandler();
+                    Settings setting =  jHandler.Deserialize<Settings>(jsonString);
+                    lastSeq = setting.LastSeq;
+                    lastDate = setting.LastDate;
+                }
+
+                List<SIT2_Item> list2 = await GetItemsFromMail(lastDate, user);
+                list2 = list2.Concat(list1).ToList();
+                list2 = list2.GroupBy(x => x.Id).Select(x => x.First()).ToList();
+
+                list2 = list2.Where(x =>
+                    DateTime.Parse(x.DeploymentWindow).Date >= DateTime.Now.Date
+                ).ToList();
+
+                await WriteItemToSystem(list2);
+                return new ObservableCollection<SIT2_Item>(list2);
+            }catch(Exception ex){
+                DialogHost.CloseDialogCommand.Execute(this, null);
+                Message msg = new Message(ex.ToString());
+                await DialogHost.Show(msg, "RootDialog", gridDialogHost_DialogOpened, gridDialogHost_DialogClosing);
             }
-
-            List<SIT2_Item> list2 = await GetItemsFromMail(lastDate, user);
-            list2 = list2.Concat(list1).ToList();
-            list2 = list2.GroupBy(x => x.Id).Select(x => x.First()).ToList();
-
-            list2 = list2.Where(x =>
-                DateTime.Parse(x.DeploymentWindow).Date >= DateTime.Now.Date
-            ).ToList();
-
-            await WriteItemToSystem(list2);
-            return new ObservableCollection<SIT2_Item>(list2);
+            return new ObservableCollection<SIT2_Item>();
         }
 
         
