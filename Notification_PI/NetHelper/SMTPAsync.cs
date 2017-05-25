@@ -40,6 +40,7 @@ namespace Notification_PI.NetHelper
                             },
                             subject,
                             body);
+                            return result;
                     }
                     catch (Exception ex)
                     {
@@ -48,7 +49,7 @@ namespace Notification_PI.NetHelper
                         else
                             throw ex;
                     }
-                        return true;
+                        return false;
                 }
                 );
             
