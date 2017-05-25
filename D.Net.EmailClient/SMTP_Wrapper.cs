@@ -32,7 +32,7 @@ namespace D.Net.EmailClient
             catch (Exception ex)
             {
 
-                ex.ToString();
+                throw ex;
             }
             return false;
         }
