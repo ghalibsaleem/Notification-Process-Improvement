@@ -27,7 +27,7 @@ namespace Notification_PI.NetHelper
                     {
                         SMTP_Wrapper asa = new SMTP_Wrapper();
                         bool result = asa.SendMessage(
-                            "webmail.maersk.net",
+                            "40.103.6.22",
                             587,
                             new List<string>(toMails),
                             new List<string>(ccMails),
