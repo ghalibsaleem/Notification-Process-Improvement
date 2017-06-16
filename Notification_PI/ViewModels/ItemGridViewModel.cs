@@ -19,6 +19,9 @@ namespace Notification_PI.ViewModels
 
 
 
+
+
+
         public ICommand RunDialogCommand => new CommandHandler(ExecuteRunDialog);
 
         private ObservableCollection<SIT2_Item> _sit_ItemCollection;
