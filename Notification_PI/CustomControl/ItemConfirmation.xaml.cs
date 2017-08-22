@@ -5,6 +5,7 @@ using Notification_PI.ModelsHelper;
 using Notification_PI.NetHelper;
 using Notification_PI.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -64,11 +65,11 @@ namespace Notification_PI.CustomControl
             Loading view = new Loading();
             try
             {
-                string[] toMail, ccMail, bccMail;
-                ItemControlViewModel model = this.DataContext as ItemControlViewModel;
-                toMail = toMailBox.Text.Split(new char[] { ';' }).Where(x => x != "").ToArray();
-                ccMail = ccMailBox.Text.Split(new char[] { ';' }).Where(x => x != "").ToArray();
-                bccMail = bccMailBox.Text.Split(new char[] { ';' }).Where(x => x != "").ToArray();
+                List<string> toMail, ccMail, bccMail;
+                ItemControlViewModel model = DataContext as ItemControlViewModel;
+                toMail = toMailBox.Text.Split(new char[] { ';' }).Where(x => x != "").ToList();
+                ccMail = ccMailBox.Text.Split(new char[] { ';' }).Where(x => x != "").ToList();
+                bccMail = bccMailBox.Text.Split(new char[] { ';' }).Where(x => x != "").ToList();
 
                 FileHandler handler = new FileHandler();
                 string str = await handler.ReadFromInstallationSystem(FileName.Template, Extension.HTML);
@@ -105,10 +106,10 @@ namespace Notification_PI.CustomControl
                 DialogHost.OpenDialogCommand.Execute(view, this);
                 
                 SMTPAsync smtpObj = new SMTPAsync();
-                
+                EWSClient eWSClient = Application.Current.Properties["ObjEWSClient"] as EWSClient;
                 string subject = itemModel.SitObject.Id + " Notification " + itemModel.SitObject.Project;
-                
-                bool result = await smtpObj.SendMessage(toMail, ccMail, bccMail, subject, str, deployer);
+                bool result = await eWSClient.SendMailAsync(toMail, ccMail, bccMail, subject, str);
+                //bool result = await smtpObj.SendMessage(toMail, ccMail, bccMail, subject, str, deployer);
                 DialogHost.CloseDialogCommand.Execute(this, view);
                 if (result)
                 {
