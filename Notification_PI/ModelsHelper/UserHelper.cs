@@ -22,10 +22,6 @@ namespace Notification_PI.ModelsHelper
 
         public async Task<bool> CheckUser(User user)
         {
-            /*IMAPAsync imap = new IMAPAsync();
-            await imap.ConnectAsync("40.103.6.22", user.Email, user.Password, 993, true);
-            return imap.IsConnected;*/
-
             var ObjEWSClient = System.Windows.Application.Current.Properties["ObjEWSClient"] as EWSClient;
             if(ObjEWSClient == null)
                 ObjEWSClient = new EWSClient();

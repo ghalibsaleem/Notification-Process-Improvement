@@ -11,7 +11,6 @@ using Notification_PI.JSONHelper;
 using Notification_PI.FileHelper;
 using Notification_PI.NetHelper;
 using HtmlParser;
-using D.Net.EmailInterfaces;
 
 namespace Notification_PI.ModelsHelper
 {
@@ -82,67 +81,6 @@ namespace Notification_PI.ModelsHelper
         private async Task<List<SIT2_Item>> GetItemsFromMail(DateTime lastDate,User user)
         {
             List<SIT2_Item> list = new List<SIT2_Item>();
-
-            #region commented code
-            /*
-            IMAPAsync d = new IMAPAsync();
-            await d.ConnectAsync("40.103.6.22", user.Email, user.Password, 993, true);
-            await d.SetCurrentFolderAsync("Inbox");
-            await d.LoadMessagesWithDateFilterAsync(lastDate);
-
-            
-            List<IEmail> Messages = d.Messages
-                .Where(x => x.Subject.Contains("Alert Notification PI - Item ID") && x.From.Contains("noreply@maersk.com"))
-                .OrderByDescending(x => x.Date).ToList();
-            await Task.Run(() =>
-            {
-                foreach (var item in Messages)
-                {
-
-                    item.LoadInfos();
-                    Parser p = new Parser();
-                    if (item.TextBody == null)
-                    {
-                        continue;
-                    }
-                    SIT2_Item table = p.ParseHtml(item.TextBody);
-                    if (table == null)
-                        continue;
-                    table.Id = item.Subject.Remove(0, item.Subject.IndexOf(" ID") + 3)
-                    ;
-                    list.Add(table);
-                }
-            }
-            );
-            
-            
-            if (d.Messages.Count > 0)
-            {
-                FileHandler fHandler = new FileHandler();
-                Settings setting;
-                JSONHandler jHandler = new JSONHandler();
-                var jsonString = await fHandler.ReadFromSystem(FileHandler.FileName.Settings);
-                if (jsonString != null)
-                {
-                    setting = jHandler.Deserialize<Settings>(jsonString);
-                    setting.LastSeq = Messages.First().SequenceNumber;
-                    setting.LastDate = Messages.First().Date;
-                }
-                else
-                {
-                    setting = new Settings();
-                    setting.LastSeq = Messages.First().SequenceNumber;
-                    setting.LastDate = Messages.First().Date;
-                }
-                jsonString = jHandler.Serialize<Settings>(setting);
-                await fHandler.WriteOnSystem(jsonString, FileHandler.FileName.Settings);
-            }
-            
-            await d.DisconnectAsync();
-            */
-            #endregion commented code
-            
-
             
             List <EmailMessageEntity> messages =await ObjEWSClient.ReadMailAsync(lastDate);
             await Task.Run(() =>

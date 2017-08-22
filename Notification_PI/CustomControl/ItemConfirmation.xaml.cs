@@ -105,11 +105,10 @@ namespace Notification_PI.CustomControl
 
                 DialogHost.OpenDialogCommand.Execute(view, this);
                 
-                SMTPAsync smtpObj = new SMTPAsync();
+               
                 EWSClient eWSClient = Application.Current.Properties["ObjEWSClient"] as EWSClient;
                 string subject = itemModel.SitObject.Id + " Notification " + itemModel.SitObject.Project;
                 bool result = await eWSClient.SendMailAsync(toMail, ccMail, bccMail, subject, str);
-                //bool result = await smtpObj.SendMessage(toMail, ccMail, bccMail, subject, str, deployer);
                 DialogHost.CloseDialogCommand.Execute(this, view);
                 if (result)
                 {

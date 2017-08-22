@@ -108,8 +108,6 @@
     <Compile Include="ModelsHelper\ItemHelper.cs" />
     <Compile Include="ModelsHelper\UserHelper.cs" />
     <Compile Include="NetHelper\EWSClient.cs" />
-    <Compile Include="NetHelper\IMAPAsync.cs" />
-    <Compile Include="NetHelper\SMTPAsync.cs" />
     <Compile Include="ViewModels\ItemControlViewModel.cs" />
     <Compile Include="ViewModels\ItemGridViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -191,14 +189,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\D.Net.EmailClient\D.Net.EmailClient.csproj">
-      <Project>{af55cdc1-3de7-4b94-8915-3edffe06f2b4}</Project>
-      <Name>D.Net.EmailClient</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\D.Net.EmailInterfaces\D.Net.EmailInterfaces.csproj">
-      <Project>{2241d8cb-641b-4654-81d1-be4896efe708}</Project>
-      <Name>D.Net.EmailInterfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\HtmlParser\HtmlParser.csproj">
       <Project>{e4d0300e-5b67-4cda-b669-369d6e76c581}</Project>
       <Name>HtmlParser</Name>
@@ -206,10 +196,6 @@
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{41f9a5af-df85-44ba-ba13-ff3da2b82380}</Project>
       <Name>Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Net\Net.csproj">
-      <Project>{7ab36ccf-5ffd-4780-a54e-a102eca028b5}</Project>
-      <Name>Net</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
