@@ -24,7 +24,7 @@ namespace Notification_PI.ModelsHelper
                 list1 = list1.OrderByDescending(a => a.Id).ToList();
                 int lastSeq = 0;
 
-                DateTime lastDate = DateTime.Now.AddDays(-50);
+                DateTime lastDate = DateTime.Now.AddDays(-150);
 
                 FileHandler fHandler = new FileHandler();
                 var jsonString = await fHandler.ReadFromSystem(FileHandler.FileName.Settings);
@@ -40,18 +40,18 @@ namespace Notification_PI.ModelsHelper
                 list2 = list2.Concat(list1).ToList();
                 list2 = list2.GroupBy(x => x.Id).Select(x => x.First()).ToList();
 
-                list2 = list2.Where(x =>
-                {
-                    DateTime date;
-                    if(DateTime.TryParse(x.DeploymentWindow,out date))
-                    {
-                        if (date.Date >= DateTime.Now.Date)
-                            return true;
-                        else
-                            return false;
-                    }
-                    return false;
-                }).ToList();
+                //list2 = list2.Where(x =>
+                //{
+                //    DateTime date;
+                //    if(DateTime.TryParse(x.DeploymentWindow,out date))
+                //    {
+                //        if (date.Date >= DateTime.Now.Date)
+                //            return true;
+                //        else
+                //            return false;
+                //    }
+                //    return false;
+                //}).ToList();
 
                 
                 await WriteItemToSystem(list2);
@@ -124,8 +124,11 @@ namespace Notification_PI.ModelsHelper
                 else
                 {
                     setting = new Settings();
-                    setting.LastSeq = Messages.First().SequenceNumber;
-                    setting.LastDate = Messages.First().Date;
+                    if (Messages.Count > 0)
+                    {
+                        setting.LastSeq = Messages.First().SequenceNumber;
+                        setting.LastDate = Messages.First().Date;
+                    }
                 }
                 jsonString = jHandler.Serialize<Settings>(setting);
                 await fHandler.WriteOnSystem(jsonString, FileHandler.FileName.Settings);
